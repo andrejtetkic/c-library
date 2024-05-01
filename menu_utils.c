@@ -118,3 +118,14 @@ void fillInForm(char* buf){
         fflush(stdout);
     }
 }
+
+void logInArt(){
+    printf("\n\n\n");
+    printf("\t\t\t" ANSI_COLOR_BRIGHT_BLUE " _      ___    ___        ___  _  _ \n");
+    printf("\t\t\t" "| |    / _ \\  / __|      |_ _|| \\| |\n");
+    printf("\t\t\t" "| |__ | (_) || (_ |       | | | .  |\n");
+    printf("\t\t\t" "|____| \\___/  \\___|      |___||_|\\_|\n\n" ANSI_COLOR_RESET);
+
+
+    
+}
