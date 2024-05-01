@@ -230,29 +230,58 @@ void DB_update(char* key, enum Tables table, void* ptr){
 
 
 
-//     Patient temp;
+void DB_delete(char* key, enum Tables table){
+    FILE *fp = Open_File(table, "rb+");
 
-//     while(fread(&temp, sizeof(Patient), 1, fp))
-//     {
-//         if(strcmp(temp.JMBG, jmbg)==0){
-//             fseek(fp, -sizeof(Patient), SEEK_CUR);
-//             fwrite(new_patient, sizeof(Patient), 1, fp);
-//             break;
-//         }
-//     }
-    
-//     fclose(fp);
-// }
+    switch (table) {
+        case BookT:
+            Book tempBook;
 
+            strcpy(tempBook.ISBN, key);
+            tempBook.deleted = 1;
 
-// void DB_delete(char jmbg[20]){
-//     FILE *fp = Open_File("rb+");
+            DB_update(key, table, &tempBook);
+            break;
 
+        case BookRST:
+            BookRS tempBookRS;
 
-//     Patient temp;
-//     strcpy(temp.JMBG, jmbg);
-//     temp.deleted = 1;
+            strcpy(tempBookRS.ISBN, key);
+            tempBookRS.deleted = 1;
 
-//     DB_update(jmbg, &temp);
+            DB_update(key, table, &tempBookRS);
+            break;
+        
+        case ReviewT:
+            Review tempReview;
 
-// }
+            strcpy(tempReview.reviewID, key);
+            tempReview.deleted = 1;
+
+            DB_update(key, table, &tempReview);
+            break;
+
+        case RentalT:
+            Rental tempRental;
+
+            strcpy(tempRental.rentalID, key);
+            tempRental.deleted = 1;
+
+            DB_update(key, table, &tempRental);
+            break;
+
+        case UserT:
+            User tempUser;
+
+            strcpy(tempUser.userID, key);
+            tempUser.deleted = 1;
+
+            DB_update(key, table, &tempUser);
+            break;
+        
+        default:
+            printf("Invalid table type\n");
+            return;
+    }
+
+}
