@@ -13,6 +13,7 @@
                 "translation_table.c",
                 "page_menus.c",
                 "utilities.c",
+                "menu_utils.c",
 
             ],
             "options": {

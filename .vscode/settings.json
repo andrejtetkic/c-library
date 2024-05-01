@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "translation_table.h": "c",
-        "utilities.h": "c"
+        "utilities.h": "c",
+        "conio.h": "c"
     }
 }

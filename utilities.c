@@ -47,26 +47,6 @@ const char* fillTimesN(char character, int len) {
     return result;
 }
 
-void clearline() {
-    printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-    printf("                            ");
-    printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-}
-
-void fillInForm(char* buf){
-    int index = 0;
-    int ch;
-
-    while((ch = getchar()) != EOF && ch != '\n') {
-
-        if(ch == '\b' && index != 0) buf[--index] = 0;
-        
-        buf[index++] = ch;
-        
-        clearline();
-        fflush(stdout);
-    }
-}
 
 int windowHeight(){
     CONSOLE_SCREEN_BUFFER_INFO csbi;
