@@ -11,6 +11,8 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "translation_table.c",
+                "page_menus.c",
+                "utilities.c",
 
             ],
             "options": {
