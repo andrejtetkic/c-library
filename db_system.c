@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "db_system.h"
+#include "db_select_compare.h"
 
 FILE* Open_File(enum Tables table, char type[10]){
     FILE *fp;
@@ -43,28 +44,162 @@ FILE* Open_File(enum Tables table, char type[10]){
 }
 
 
+void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_size, int* num_found) {
+    // Example Usage:
+    // ComparisonPair compare_pairs[] = {
+    //     { compareByUserID, "123" }, 
+    //    // { compareByUserID, "12345" },
+    //     // { compareBySomeField, "some_value" }
+    // };
 
-// int DB_select(char JMBG_Q[20], char name_Q[100], char surname_Q[100], Patient out[100]){
-//     FILE *fp = Open_File("rb");
-//     Patient temp;
+    // int num_found;
+    // User* found_users = DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+    // if (found_users != NULL) {
+    //     printf("Found %d user(s):\n", num_found);
+    //     for (int i = 0; i < num_found; i++) {
+    //         printf("User ID: %s\n", found_users[i].userID);
+    //     }
+    //     free(found_users);
+    // } else {
+    //     printf("No matching records found.\n");
+    // }
+
+    FILE* fp = Open_File(table, "rb");
+    int num_pairs = comp_pair_size / sizeof(ComparisonPair);
+
+    void* found_records = NULL;
+    int found_count = 0;
+
+    switch (table) {
+        case BookT: {
+            Book tempBook;
+            while (fread(&tempBook, sizeof(Book), 1, fp) == 1) {
+                for (int i = 0; i < num_pairs; i++) {
+                    if (compare_pairs[i].compare_func(&tempBook, compare_pairs[i].key) == 0 
+                                                        && tempBook.deleted != 1) {
+
+                        found_records = realloc(found_records, (found_count + 1) * sizeof(Book));
+                        if (found_records == NULL) {
+                            printf("Failed to allocate memory");
+                            fclose(fp);
+                            return NULL;
+                        }
+                        // Copy the found record to the array
+                        memcpy((Book*)found_records + found_count, &tempBook, sizeof(Book));
+                        found_count++;
+                        
+                    }
+                }
+            }
+            break;
+        }
+
+        case BookRST: {
+            BookRS tempBookRS;
+            while (fread(&tempBookRS, sizeof(BookRS), 1, fp) == 1) {
+                for (int i = 0; i < num_pairs; i++) {
+                    if (compare_pairs[i].compare_func(&tempBookRS, compare_pairs[i].key) == 0 
+                                                        && tempBookRS.deleted != 1) {
+
+                        found_records = realloc(found_records, (found_count + 1) * sizeof(BookRS));
+                        if (found_records == NULL) {
+                            printf("Failed to allocate memory");
+                            fclose(fp);
+                            return NULL;
+                        }
+                        // Copy the found record to the array
+                        memcpy((BookRS*)found_records + found_count, &tempBookRS, sizeof(BookRS));
+                        found_count++;
+                        
+                    }
+                }
+            }
+            break;
+        }
+        
+        case ReviewT:{
+            Review tempReview;
+            while (fread(&tempReview, sizeof(Review), 1, fp) == 1) {
+                for (int i = 0; i < num_pairs; i++) {
+                    if (compare_pairs[i].compare_func(&tempReview, compare_pairs[i].key) == 0 
+                                                        && tempReview.deleted != 1) {
+
+                        found_records = realloc(found_records, (found_count + 1) * sizeof(Review));
+                        if (found_records == NULL) {
+                            printf("Failed to allocate memory");
+                            fclose(fp);
+                            return NULL;
+                        }
+                        // Copy the found record to the array
+                        memcpy((Review*)found_records + found_count, &tempReview, sizeof(Review));
+                        found_count++;
+                        
+                    }
+                }
+            }
+            break;
+        }
+
+        case RentalT: {
+            Rental tempRental;
+            while (fread(&tempRental, sizeof(Rental), 1, fp) == 1) {
+                for (int i = 0; i < num_pairs; i++) {
+                    if (compare_pairs[i].compare_func(&tempRental, compare_pairs[i].key) == 0 
+                                                        && tempRental.deleted != 1) {
+
+                        found_records = realloc(found_records, (found_count + 1) * sizeof(Rental));
+                        if (found_records == NULL) {
+                            printf("Failed to allocate memory");
+                            fclose(fp);
+                            return NULL;
+                        }
+                        // Copy the found record to the array
+                        memcpy((Rental*)found_records + found_count, &tempRental, sizeof(Rental));
+                        found_count++;
+                        
+                    }
+                }
+            }
+            break;
+        }
+
+        case UserT: {
+            User tempUser;
+            while (fread(&tempUser, sizeof(User), 1, fp) == 1) {
+                for (int i = 0; i < num_pairs; i++) {
+                    if (compare_pairs[i].compare_func(&tempUser, compare_pairs[i].key) == 0 
+                                                        && tempUser.deleted != 1) {
+
+                        found_records = realloc(found_records, (found_count + 1) * sizeof(User));
+                        if (found_records == NULL) {
+                            printf("Failed to allocate memory");
+                            fclose(fp);
+                            return NULL;
+                        }
+                        // Copy the found record to the array
+                        memcpy((User*)found_records + found_count, &tempUser, sizeof(User));
+                        found_count++;
+                        
+                    }
+                }
+            }
+            break;
+        }
+
+        default:
+            printf("Invalid table type\n");
+            break;
+    }
 
 
-//     int n = 0;
-//     while(fread(&temp, sizeof(Patient), 1, fp))
-//     {
-//         if((strcmp(JMBG_Q, temp.JMBG)==0 ||strcmp(JMBG_Q, "")==0)  &&
-//         (strcmp(name_Q, temp.Ime)==0 || strcmp(name_Q, "")==0) && 
-//         (strcmp(surname_Q, temp.Prezime)==0 || strcmp(surname_Q, "")==0) &&
-//         temp.deleted == 0){
-//             out[n] = temp;
-//             n++;
-//         }
-//     }
+    fclose(fp);
 
-//     fclose(fp);
+    *num_found = found_count;
 
-//     return n;
-// }
+    return found_records;
+}
+
 
 void DB_insert(enum Tables table, void* ptr){
     FILE* fp = Open_File(table, "ab");
@@ -233,9 +368,16 @@ void DB_update(char* key, enum Tables table, void* ptr){
 void DB_delete(char* key, enum Tables table){
     FILE *fp = Open_File(table, "rb+");
 
+    Book tempBook;            
+    BookRS tempBookRS;
+    Review tempReview;
+    Rental tempRental;
+    User tempUser;
+
+
+
     switch (table) {
         case BookT:
-            Book tempBook;
 
             strcpy(tempBook.ISBN, key);
             tempBook.deleted = 1;
@@ -244,7 +386,6 @@ void DB_delete(char* key, enum Tables table){
             break;
 
         case BookRST:
-            BookRS tempBookRS;
 
             strcpy(tempBookRS.ISBN, key);
             tempBookRS.deleted = 1;
@@ -253,7 +394,6 @@ void DB_delete(char* key, enum Tables table){
             break;
         
         case ReviewT:
-            Review tempReview;
 
             strcpy(tempReview.reviewID, key);
             tempReview.deleted = 1;
@@ -262,7 +402,6 @@ void DB_delete(char* key, enum Tables table){
             break;
 
         case RentalT:
-            Rental tempRental;
 
             strcpy(tempRental.rentalID, key);
             tempRental.deleted = 1;
@@ -271,7 +410,6 @@ void DB_delete(char* key, enum Tables table){
             break;
 
         case UserT:
-            User tempUser;
 
             strcpy(tempUser.userID, key);
             tempUser.deleted = 1;

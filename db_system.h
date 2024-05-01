@@ -43,9 +43,18 @@ typedef struct user
 
 
 
+typedef int (*ComparisonCallback)(void* record, char* key);
+
+typedef struct {
+    ComparisonCallback compare_func;
+    char* key;
+} ComparisonPair;
+
+
 void DB_insert(enum Tables table, void* ptr);
 void DB_update(char* key, enum Tables table, void* ptr);
 void DB_delete(char* key, enum Tables table);
+void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_size, int* num_found);
 
 
 

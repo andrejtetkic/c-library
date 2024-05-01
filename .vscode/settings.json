@@ -5,6 +5,7 @@
         "conio.h": "c",
         "stdio.h": "c",
         "db_system.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "page_menus.h": "c"
     }
 }

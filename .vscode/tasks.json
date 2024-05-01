@@ -15,6 +15,7 @@
                 "utilities.c",
                 "menu_utils.c",
                 "db_system.c",
+                "db_select_compare.c",
 
             ],
             "options": {
