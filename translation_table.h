@@ -3,7 +3,8 @@
 
 #define SIZE 100
 #define NUM_LANGUAGES 2 // Define the number of supported languages
-
+#define RS_LANG 1
+#define EN_LANG 0
 
 typedef struct {
     char *key;
