@@ -12,32 +12,34 @@ enum Tables {
 
 typedef struct book
 {
-    int t;
+    char ISBN[10];
 } Book;
 
 typedef struct book_rs
 {
-    int t;
+    char ISBN[10];
 } BookRS;
 
 typedef struct review
 {
-    int t;
+    char reviewID[10];
 } Review;
 
 typedef struct rental
 {
-    int t;
+    char rentalID[10];
 } Rental;
 
 typedef struct user
 {
-    int t;
+    char userID[10];
+    char name[10];
 } User;
 
 
 
 void DB_insert(enum Tables table, void* ptr);
+void DB_update(char* key, enum Tables table, void* ptr);
 
 
 

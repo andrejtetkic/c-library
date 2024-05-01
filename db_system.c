@@ -107,13 +107,125 @@ void DB_insert(enum Tables table, void* ptr){
 
 
 
-// void DB_update(char jmbg[20], Patient *new_patient){
-//     FILE *fp = Open_File("rb+");
-//     if(strcmp(new_patient->JMBG, jmbg) != 0){
-//         printf("JMBGs don't match!\n");
-//         fclose(fp);
-//         return;
-//     }
+void DB_update(char* key, enum Tables table, void* ptr){
+    FILE* fp = Open_File(table, "rb+");
+    
+    
+
+    void* a_ptr;
+    switch (table) {
+        case BookT:
+            a_ptr = (Book*)ptr;
+            if(strcmp(((Book*)a_ptr)->ISBN, key) != 0){
+                printf("Keys don't match!\n");
+                fclose(fp);
+                return;
+            }
+
+            Book tempBook;
+
+            while(fread(&tempBook, sizeof(Book), 1, fp))
+            {
+                if(strcmp(tempBook.ISBN, key)==0){
+                    fseek(fp, -sizeof(Book), SEEK_CUR);
+                    fwrite(a_ptr, sizeof(Book), 1, fp);
+                    break;
+                }
+            }
+
+            break;
+
+        case BookRST:
+            a_ptr = (BookRS*)ptr;
+            if(strcmp(((BookRS*)a_ptr)->ISBN, key) != 0){
+                printf("Keys don't match!\n");
+                fclose(fp);
+                return;
+            }
+
+            BookRS tempBookRS;
+
+            while(fread(&tempBookRS, sizeof(BookRS), 1, fp))
+            {
+                if(strcmp(tempBookRS.ISBN, key)==0){
+                    fseek(fp, -sizeof(BookRS), SEEK_CUR);
+                    fwrite(a_ptr, sizeof(BookRS), 1, fp);
+                    break;
+                }
+            }
+
+            break;
+        
+        case ReviewT:
+            a_ptr = (Review*)ptr;
+            if(strcmp(((Review*)a_ptr)->reviewID, key) != 0){
+                printf("Keys don't match!\n");
+                fclose(fp);
+                return;
+            }
+
+            Review tempRoview;
+
+            while(fread(&tempRoview, sizeof(Review), 1, fp))
+            {
+                if(strcmp(tempRoview.reviewID, key)==0){
+                    fseek(fp, -sizeof(Review), SEEK_CUR);
+                    fwrite(a_ptr, sizeof(Review), 1, fp);
+                    break;
+                }
+            }
+
+            break;
+
+        case RentalT:
+            a_ptr = (Rental*)ptr;
+            if(strcmp(((Rental*)a_ptr)->rentalID, key) != 0){
+                printf("Keys don't match!\n");
+                fclose(fp);
+                return;
+            }
+
+            Rental tempRental;
+
+            while(fread(&tempRental, sizeof(Rental), 1, fp))
+            {
+                if(strcmp(tempRental.rentalID, key)==0){
+                    fseek(fp, -sizeof(Rental), SEEK_CUR);
+                    fwrite(a_ptr, sizeof(Rental), 1, fp);
+                    break;
+                }
+            }
+
+            break;
+
+        case UserT:
+            a_ptr = (User*)ptr;
+            if(strcmp(((User*)a_ptr)->userID, key) != 0){
+                printf("Keys don't match!\n");
+                fclose(fp);
+                return;
+            }
+
+            User tempUser;
+
+            while(fread(&tempUser, sizeof(User), 1, fp))
+            {
+                if(strcmp(tempUser.userID, key)==0){
+                    fseek(fp, -sizeof(User), SEEK_CUR);
+                    fwrite(a_ptr, sizeof(User), 1, fp);
+                    break;
+                }
+            }
+
+            break;
+        
+        default:
+            printf("Invalid table type\n");
+            return;
+    }
+
+    fclose(fp);
+}
 
 
 
