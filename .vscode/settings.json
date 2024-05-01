@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "translation_table.h": "c"
+        "translation_table.h": "c",
+        "utilities.h": "c"
     }
 }

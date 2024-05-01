@@ -1,5 +1,6 @@
-#ifndef HEADER_H_INCLUDED
-#define HEADER_H_INCLUDED
+#ifndef PAGE_MENUS_H_INCLUDED
+#define PAGE_MENUS_H_INCLUDED
 
+void landingPage();
 
-#endif /* HEADER_H_INCLUDED */
+#endif /* PAGE_MENUS_H_INCLUDED */

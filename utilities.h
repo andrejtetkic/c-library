@@ -1,5 +1,5 @@
-#ifndef HEADER_H_INCLUDED
-#define HEADER_H_INCLUDED
+#ifndef UTILITIES_H_INCLUDED
+#define UTILITIES_H_INCLUDED
 
 #define UP_ARROW 72 
 #define DOWN_ARROW 80
@@ -39,4 +39,4 @@ int windowHeight();
 int windowWidth();
 
 
-#endif /* HEADER_H_INCLUDED */
+#endif /* UTILITIES_H_INCLUDED */

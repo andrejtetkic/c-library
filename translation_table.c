@@ -65,7 +65,7 @@ char* getTranslation(char *key, int langIndex) {
 
 int initializeTranslationTable() {
     //      key    1st lan   2nd lan   ...
-    insert("name", "Name", "Ime");
+    insert("name", "First Name", "Ime");
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
 

@@ -47,6 +47,11 @@ const char* fillTimesN(char character, int len) {
     return result;
 }
 
+void clearline() {
+    printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+    printf("                            ");
+    printf("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+}
 
 void fillInForm(char* buf){
     int index = 0;
