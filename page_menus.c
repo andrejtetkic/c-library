@@ -8,6 +8,7 @@
 #include "db_system.h"
 #include "db_select_compare.h"
 #include "translation_table.h"
+#include "arg_functions.h"
 
 void logIn();
 void browse();
@@ -118,30 +119,6 @@ char* getBookInformation(Book* item, int k){
 
 }
 
-void printBookItem(void* item, int k, int column_width){
-    printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", getBookInformation((Book*)item, k), 
-            fillTimesN(' ', column_width - strlen(getBookInformation((Book*)item, k))), fillTimesN(' ', 3));
-}
-
-void printBookItemSelected(void* item, int k, int column_width){
-    printf(ANSI_B_COLOR_RED " %s%s" ANSI_COLOR_RESET "%s", getBookInformation((Book*)item, k), 
-            fillTimesN(' ', column_width - strlen(getBookInformation((Book*)item, k))), fillTimesN(' ', 3));
-}
-
-
-
-
-
-void tempEnterFunc(void* item){
-    printf("selected item ISBN = %s", ((Book*)item)->ISBN);
-    pressEnter();
-}
-
-int wrapperEmpty(){
-    printf("Wrapper!");
-
-    return 1;
-}
 
 
 

@@ -31,7 +31,6 @@ void contorlSelectedIndex(int ch, int* selected_index, int columns){
     default:
         break;
     }
-    printf("%d", *selected_index);
 }
 
 int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int left_spacing, int button_spacing, int is_3_line, int top_offset) {
@@ -136,8 +135,6 @@ void logInArt(){
     printf("\t\t\t" "| |__ | (_) || (_ |       | | | .  |\n");
     printf("\t\t\t" "|____| \\___/  \\___|      |___||_|\\_|\n\n" ANSI_COLOR_RESET);
 
-
-    
 }
 
 
