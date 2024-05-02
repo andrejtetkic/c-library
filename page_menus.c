@@ -137,6 +137,13 @@ void tempEnterFunc(void* item){
     pressEnter();
 }
 
+int wrapperEmpty(){
+    printf("Wrapper!");
+
+    return 1;
+}
+
+
 
 void browse(){
 
@@ -148,7 +155,7 @@ void browse(){
     Book* found_books = DB_select(BookT, compare_pairs, sizeof(compare_pairs), &num_found);
 
     if (found_books != NULL) {
-        browseInitiate(printBookItem, printBookItemSelected, found_books, sizeof(Book), num_found, tempEnterFunc, 35, 7);
+        browseInitiate(printBookItem, printBookItemSelected, found_books, sizeof(Book), num_found, tempEnterFunc, 35, 7, wrapperEmpty, wrapperEmpty);
     } else {
         printf("%s\n", getTranslation("no_results", activeUser.language));
     }

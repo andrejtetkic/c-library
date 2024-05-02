@@ -142,11 +142,11 @@ void logInArt(){
 
 
 
-void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, int column_width, int row_height){
+void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, int column_width, int row_height, int wrappers_size){
 
     int books_per_row = windowWidth()/(column_width + 4);
 
-    int max_books_to_show = books_per_row * (windowHeight()/row_height);
+    int max_books_to_show = books_per_row * ((windowHeight() - wrappers_size)/row_height);
     int start_from_index = max_books_to_show/books_per_row*(selected_index/max_books_to_show);
 
     // printf("execvuting");
@@ -175,19 +175,27 @@ void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDis
 
 
 // Keep in mind that row height includes seperators, so it will be larger by 2 if row ends with \n\n
-void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, ObjectEnterMenu enter_function, int column_width, int row_height){
+void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, ObjectEnterMenu enter_function, int column_width, int row_height, PrintWrapper preWrapper, PrintWrapper postWrapper){
     char ch;
     int selected_index = 0;
 
 
     int columns;
 
+    int wrappers_size = postWrapper() + preWrapper();
+
     while (ch != ESC)
     {
+        clearScreen();
+
         columns = windowWidth()/(column_width + 4);
 
-        
-        BrowseDisplay(selected_index, printOne, printOneSelected, items, size_of_item, num_items, column_width, row_height);
+        preWrapper();
+        printf("\n");
+
+        BrowseDisplay(selected_index, printOne, printOneSelected, items, size_of_item, num_items, column_width, row_height, wrappers_size);
+
+        postWrapper();
 
         ch = getKeyPressed();
         contorlSelectedIndex(ch, &selected_index, columns);
@@ -195,7 +203,6 @@ void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printO
         selected_index = min(selected_index, num_items-1);
         selected_index = max(selected_index, 0);
 
-        clearScreen();
 
         if(ch == ENTER) enter_function(items + selected_index*size_of_item);
     }
