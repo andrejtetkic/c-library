@@ -19,7 +19,7 @@ void landingPage(){
     int width = 30;
 
     char *buttons[] = {"Log In", "Sign Up"};
-    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2);
+    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
 
     switch (selection)
     {
@@ -84,40 +84,6 @@ void logIn(){
     browse();
 }
 
-
-
-
-
-
-char* getBookInformation(Book* item, int k){
-
-    char* naziv[35];
-    char* autor[35];
-    char* dostupnost[35];
-
-    *naziv = "Naziv Knjige i biblioteka";
-    *autor = "R. R. Martin";
-    *dostupnost = "Na Stanju";
-
-
-    switch (k)
-    {
-    case 0:
-        return item->ISBN;
-    
-    case 1:
-        return "";
-    
-    case 2:
-        return *autor;
-    
-    case 3:
-        return "4.32* (7)";
-    case 4:
-        return *dostupnost;
-    }
-
-}
 
 
 

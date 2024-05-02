@@ -33,7 +33,7 @@ void contorlSelectedIndex(int ch, int* selected_index, int columns){
     }
 }
 
-int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int left_spacing, int button_spacing, int is_3_line, int top_offset) {
+int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int left_spacing, int button_spacing, int is_3_line, int top_offset, PrintWrapper preWrapper, PrintWrapper postWrapper) {
     int ch = 0;
     int selected_index = 0;
 
@@ -41,6 +41,8 @@ int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int
     while (ch != ENTER) {
         printf("%s", fillTimesN('\n', top_offset));
 
+        preWrapper();
+        printf("\n");
 
         if(is_3_line==1){
             for (int i = 0; i < numButtons; i++) {
@@ -89,6 +91,8 @@ int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int
             }
         }
 
+        printf("\n");
+        postWrapper();
 
         ch = getKeyPressed();
 
@@ -134,6 +138,36 @@ void logInArt(){
     printf("\t\t\t" "| |    / _ \\  / __|      |_ _|| \\| |\n");
     printf("\t\t\t" "| |__ | (_) || (_ |       | | | .  |\n");
     printf("\t\t\t" "|____| \\___/  \\___|      |___||_|\\_|\n\n" ANSI_COLOR_RESET);
+
+}
+
+char* getBookInformation(Book* item, int k){
+
+    char* naziv[35];
+    char* autor[35];
+    char* dostupnost[35];
+
+    *naziv = "Naziv Knjige i biblioteka";
+    *autor = "R. R. Martin";
+    *dostupnost = "Na Stanju";
+
+
+    switch (k)
+    {
+    case 0:
+        return item->ISBN;
+    
+    case 1:
+        return "";
+    
+    case 2:
+        return *autor;
+    
+    case 3:
+        return "4.32* (7)";
+    case 4:
+        return *dostupnost;
+    }
 
 }
 
