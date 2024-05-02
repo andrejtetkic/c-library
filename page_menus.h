@@ -3,5 +3,6 @@
 
 void landingPage();
 void logIn();
+void browse();
 
 #endif /* PAGE_MENUS_H_INCLUDED */

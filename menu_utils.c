@@ -5,23 +5,33 @@
 #include <math.h>
 
 #include "utilities.h"
+#include "menu_utils.h"
 
-void contorlSelectedIndex(int ch, int* selected_index){
+#include "db_system.h"
+
+void contorlSelectedIndex(int ch, int* selected_index, int columns){
     switch (ch)
-        {
-        case LEFT_ARROW:
-            (*selected_index)--;
-            break;
-        case RIGHT_ARROW:
-            (*selected_index)++;
-            break;
-        case TAB:
-            (*selected_index)++;
-            break;
-        
-        default:
-            break;
-        }
+    {
+    case UP_ARROW:
+        (*selected_index) -= columns;
+        break;
+    case DOWN_ARROW:
+        (*selected_index) += columns;
+        break; 
+    case LEFT_ARROW:
+        (*selected_index)--;
+        break;
+    case RIGHT_ARROW:
+        (*selected_index)++;
+        break;
+    case TAB:
+        (*selected_index)++;
+        break;
+    
+    default:
+        break;
+    }
+    printf("%d", *selected_index);
 }
 
 int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int left_spacing, int button_spacing, int is_3_line, int top_offset) {
@@ -83,7 +93,7 @@ int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int
 
         ch = getKeyPressed();
 
-        contorlSelectedIndex(ch, &selected_index);
+        contorlSelectedIndex(ch, &selected_index, numButtons);
 
         selected_index = fmin(selected_index, numButtons-1);
         selected_index = fmax(0, selected_index);
@@ -128,4 +138,65 @@ void logInArt(){
 
 
     
+}
+
+
+
+void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, int column_width, int row_height){
+
+    int books_per_row = windowWidth()/(column_width + 4);
+
+    int max_books_to_show = books_per_row * (windowHeight()/row_height);
+    int start_from_index = max_books_to_show/books_per_row*(selected_index/max_books_to_show);
+
+    // printf("execvuting");
+    // printf("%s", ((Book**)items)[0]->ISBN);
+    char* temp_text[35];
+    int break_point = -1;
+    for(int j = start_from_index; j < start_from_index + max_books_to_show / (books_per_row) ; j++){
+        for(int k = 0; k < 5; k++){
+            for(int i = 0; i < books_per_row; i++){
+                if(books_per_row*j + i == num_items) break_point = i;
+                
+                if(i != break_point){
+                    if(books_per_row*j + i == selected_index){
+                        printOneSelected(items + (books_per_row*j + i)*size_of_item, k, column_width);
+                    } else if(books_per_row*j + i <= num_items){
+                        printOne(items + (books_per_row*j + i)*size_of_item, k, column_width);
+                    }
+                }
+            }
+            printf("\n");
+        }
+        if(break_point >= 0 || j == start_from_index + max_books_to_show / (books_per_row)) return;
+        printf("\n\n");
+    }
+}
+
+
+// Keep in mind that row height includes seperators, so it will be larger by 2 if row ends with \n\n
+void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, ObjectEnterMenu enter_function, int column_width, int row_height){
+    char ch;
+    int selected_index = 0;
+
+
+    int columns;
+
+    while (ch != ESC)
+    {
+        columns = windowWidth()/(column_width + 4);
+
+        
+        BrowseDisplay(selected_index, printOne, printOneSelected, items, size_of_item, num_items, column_width, row_height);
+
+        ch = getKeyPressed();
+        contorlSelectedIndex(ch, &selected_index, columns);
+
+        selected_index = min(selected_index, num_items-1);
+        selected_index = max(selected_index, 0);
+
+        clearScreen();
+
+        if(ch == ENTER) enter_function(items + selected_index*size_of_item);
+    }
 }
