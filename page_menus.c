@@ -5,9 +5,13 @@
 
 #include "utilities.h"
 #include "menu_utils.h"
-
+#include "db_system.h"
+#include "db_select_compare.h"
+#include "translation_table.h"
+#include "arg_functions.h"
 
 void logIn();
+void browse();
 
 void landingPage(){
     clearScreen();
@@ -15,7 +19,7 @@ void landingPage(){
     int width = 30;
 
     char *buttons[] = {"Log In", "Sign Up"};
-    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2);
+    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
 
     switch (selection)
     {
@@ -66,4 +70,39 @@ void logIn(){
 
     char password[200] = {0};
     fillInForm(password);
+
+    // set active user
+    User temp;
+    strcpy(temp.userID, "123456");
+    strcpy(temp.name, "N123456");
+    temp.language = 1;
+
+    activeUser = temp;
+
+    // this will later call mainmenu function
+    //for testing purpuses calling browse
+    browse();
+}
+
+
+
+
+
+void browse(){
+
+    ComparisonPair compare_pairs[] = {
+        { compareSelectEverything, "" }, 
+    };
+
+    int num_found;
+    Book* found_books = DB_select(BookT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+    if (found_books != NULL) {
+        browseInitiate(printBookItem, printBookItemSelected, found_books, sizeof(Book), num_found, tempEnterFunc, 35, 7, wrapperEmpty, wrapperEmpty);
+    } else {
+        printf("%s\n", getTranslation("no_results", activeUser.language));
+    }
+
+    free(found_books);
+
 }

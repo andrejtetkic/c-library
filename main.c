@@ -14,6 +14,19 @@ int main(){
 
     landingPage();
 
+    // Book temp;
+
+    // char buffer[20];
+
+    // for(int i = 0; i<15; i++){
+    //     itoa(i,buffer,10);
+
+    //     strcpy(temp.ISBN, buffer);
+    //     temp.deleted = 0;
+
+    //     DB_insert(BookT, &temp);
+    // }
+
     pressEnter();
     return 0;
 }

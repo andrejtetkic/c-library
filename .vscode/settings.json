@@ -6,6 +6,8 @@
         "stdio.h": "c",
         "db_system.h": "c",
         "stdlib.h": "c",
-        "page_menus.h": "c"
+        "page_menus.h": "c",
+        "db_select_compare.h": "c",
+        "string.h": "c"
     }
 }

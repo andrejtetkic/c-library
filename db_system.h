@@ -39,9 +39,10 @@ typedef struct user
     char userID[10];
     char name[10];
     int deleted;
+    int language;
 } User;
 
-
+User activeUser;
 
 typedef int (*ComparisonCallback)(void* record, char* key);
 
