@@ -21,11 +21,6 @@ void printBookItemSelected(void* item, int k, int column_width){
 
 
 
-void tempEnterFunc(void* item){
-    printf("selected item ISBN = %s", ((Book*)item)->ISBN);
-    pressEnter();
-}
-
 int wrapperEmpty(){
     return 0;
 }
