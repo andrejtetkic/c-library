@@ -77,7 +77,7 @@ void logIn(){
     User temp;
     strcpy(temp.userID, "123456");
    // strcpy(temp.name, "N123456");
-    temp.language = 0;
+    temp.language = RS_LANG;
     temp.Privilege = 1;
     activeUser = temp;
 
@@ -90,12 +90,12 @@ int bookViewInformation(){
 
     clearScreen();
 
-    printf("Title: %s\n", active_book->Title);
-    printf("Author: %s\n", active_book->Author);
-    printf("Series: %s, active_book number %d\n", active_book->SerialName, active_book->SerialNumber);
-    printf("Number of Pages: %d\n", active_book->NumberOfPages);
+    printf("%s: %s\n", getTranslation("title", activeUser.language), active_book->Title);
+    printf("%s: %s\n", getTranslation("author", activeUser.language), active_book->Author);
+    printf("%s: %s, %s %d\n", getTranslation("series", activeUser.language), active_book->SerialName, getTranslation("book_num", activeUser.language), active_book->SerialNumber);
+    printf("%s: %d\n", getTranslation("pages", activeUser.language), active_book->NumberOfPages);
 
-    if(strcmp(active_book->Genre[0], "") != 0) printf("Genre: ");
+    if(strcmp(active_book->Genre[0], "") != 0) printf("%s: ", getTranslation("genre", activeUser.language));
     for(int i = 0; i < 10; i++){
         if(strcmp(active_book->Genre[i], "") == 0) break;
 
@@ -103,7 +103,7 @@ int bookViewInformation(){
     }
     printf("\n");
 
-    if(strcmp(active_book->Tags[0], "") != 0) printf("Tags: ");
+    if(strcmp(active_book->Tags[0], "") != 0) printf("%s: ", getTranslation("tags", activeUser.language));
     for(int i = 0; i < 10; i++){
         if(strcmp(active_book->Tags[i], "") == 0) break;
 
@@ -111,7 +111,7 @@ int bookViewInformation(){
     }
     printf("\n");
 
-    printf("Published by %s in %d\n", active_book->Publisher, active_book->PublicationYear);
+    printf("%s %s %s %d\n", getTranslation("published", activeUser.language), active_book->Publisher, getTranslation("in", activeUser.language), active_book->PublicationYear);
     printf("ISBN: %s\n", active_book->ISBN);
 
     printf("\n\n");
@@ -133,16 +133,17 @@ int bookViewInformation(){
     } else
         printf(ANSI_COLOR_RED "%s" ANSI_COLOR_RESET, getTranslation("out_stock", activeUser.language));
 
+    printf("\n\n");
 }
 
 void bookView(void* item){
     active_book = item;
 
-    int width = 20;
+    int width = 24;
     int selection;
 
-    char *buttonsUser[] = {"Back to Browsing", "Rent This", "Reviews", "Leave a Review"};
-    char *buttonsAdmin[] = {"Back to Browsing", "Edit", "Delete"};
+    char *buttonsUser[] = {getTranslation("back_br", activeUser.language), getTranslation("rentT", activeUser.language), getTranslation("rev", activeUser.language), getTranslation("lev_rev", activeUser.language)};
+    char *buttonsAdmin[] = {getTranslation("back_br", activeUser.language), getTranslation("edit", activeUser.language), getTranslation("delete", activeUser.language)};
 
 
     if(activeUser.Privilege == 1){
