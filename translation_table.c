@@ -69,6 +69,8 @@ int initializeTranslationTable() {
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
     insert("no_results", "No Results Found", "Nista nije pronadjeno :(");
+    insert("in_stock", "In Stock", "Na Stanju");
+    insert("out_stock", "Out of Stock", "Nije na Stanju");
 
     return 0;
 }

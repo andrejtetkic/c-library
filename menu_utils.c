@@ -6,8 +6,10 @@
 
 #include "utilities.h"
 #include "menu_utils.h"
+#include "translation_table.h"
 
 #include "db_system.h"
+#include "db_select_compare.h"
 
 void contorlSelectedIndex(int ch, int* selected_index, int columns){
     switch (ch)
@@ -143,8 +145,8 @@ void logInArt(){
 
 char* getBookInformation(Book* item, int k){
 
-    char* naziv[35];
-    char* autor[35];
+    char* naziv[100];
+    char* autor[100];
     char* dostupnost[35];
 
     *naziv = "Naziv Knjige i biblioteka";
@@ -154,19 +156,65 @@ char* getBookInformation(Book* item, int k){
 
     switch (k)
     {
-    case 0:
-        return item->ISBN;
-    
-    case 1:
-        return "";
-    
-    case 2:
-        return *autor;
-    
-    case 3:
-        return "4.32* (7)";
-    case 4:
-        return *dostupnost;
+        case 0:
+            return item->Title;
+        
+        case 1:
+            return "";
+        
+        case 2:
+            return item->Author;
+        
+        case 3:{
+            ComparisonPair compare_pairs[] = {
+                { compareByReviewBookISBN, item->ISBN }, 
+            };
+
+            int num_found = 0;
+            float avg_rating = 0;
+            Review* reviews =  DB_select(ReviewT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+            if (reviews != NULL) {
+                for (int i = 0; i < num_found; i++) {
+                    avg_rating += (float)reviews[i].Rating / num_found;
+                }
+            } else {
+                free(reviews);
+                return "";
+            }
+
+            char* formatted_str = (char*)malloc(50 * sizeof(char));
+            snprintf(formatted_str, 50, "%.2f* (%d)", avg_rating, num_found);
+
+            free(reviews);
+
+            return formatted_str;
+
+        }
+            
+        case 4:{
+
+            ComparisonPair compare_pairs[] = {
+                { compareByRentalBookISBN, item->ISBN}, 
+                { compareByRentalReturnYearEqZero, item->ISBN}, 
+            };
+
+            int num_found = 0;
+            Rental* rentals =  DB_select(RentalT, compare_pairs, sizeof(compare_pairs), &num_found);
+            if (rentals == NULL)
+                num_found = 0;
+
+            free(rentals);
+
+            if(item->numberOfCopies > num_found){
+                return getTranslation("in_stock", activeUser.language);
+            }
+
+
+            return getTranslation("out_stock", activeUser.language);
+              
+        }
+       
     }
 
 }

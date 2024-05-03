@@ -74,8 +74,8 @@ void logIn(){
     // set active user
     User temp;
     strcpy(temp.userID, "123456");
-    strcpy(temp.name, "N123456");
-    temp.language = 1;
+   // strcpy(temp.name, "N123456");
+    temp.language = 0;
 
     activeUser = temp;
 
@@ -83,8 +83,6 @@ void logIn(){
     //for testing purpuses calling browse
     browse();
 }
-
-
 
 
 

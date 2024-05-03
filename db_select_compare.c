@@ -13,3 +13,18 @@ int compareByUserID(void* record, char* key) {
 int compareSelectEverything(void* record, char* key){
     return 0;
 }
+
+int compareByReviewBookISBN(void* record, char* key){
+    Review* review = (Review*)record;
+    return strcmp(review->BookISBN, key);
+}
+
+int compareByRentalBookISBN(void* record, char* key){
+    Rental* rental = (Rental*)record;
+    return strcmp(rental->BookISBN, key);
+}
+
+int compareByRentalReturnYearEqZero(void* record, char* key){
+    Rental* rental = (Rental*)record;
+    return rental->RentDate.year != 0;
+}
