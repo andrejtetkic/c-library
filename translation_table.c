@@ -69,6 +69,29 @@ int initializeTranslationTable() {
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
     insert("no_results", "No Results Found", "Nista nije pronadjeno :(");
+    insert("in_stock", "In Stock", "Na Stanju");
+    insert("out_stock", "Out of Stock", "Nije na Stanju");
+    insert("title", "Title", "Naziv");
+    insert("author", "Author", "Autor");
+    insert("series", "Series", "Serijal");
+    insert("book_num", "book number", "knjiga broj");
+    insert("pages", "Number of Pages", "Broj Stranica");
+    insert("genre", "Genre", "Zanr");
+    insert("tags", "Tags", "Tagovi");
+    insert("published", "Published by", "Objavio");
+    insert("in", "in", "");
+    insert("back_br", "Back to Browsing", "Nazad na Pregledanje");
+    insert("rentT", "Rent This", "Iznajmi");
+    insert("rev", "Reviews", "Recenzije");
+    insert("lev_rev", "Leave a Review", "Postavite Recenziju");
+    insert("edit", "Edit", "Izmeni");
+    insert("delete", "Delete", "Izbrisi");
+    insert("review", "Review", "Oceni");
+    insert("rating", "Rating", "Ocena");
+    insert("detiles", "Share Details", "Podelite Detalje");
+    insert("alr_rev", "You have Already left a Review on this Book", "Vec ste Ocenili ovu Knjigu");
+
+
 
     return 0;
 }

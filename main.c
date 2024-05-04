@@ -12,19 +12,37 @@
 int main(){
     initializeTranslationTable();
 
-    landingPage();
+   landingPage();
 
     // Book temp;
+    // Review temp;
+    // Rental temp;
+    // User temp;
 
     // char buffer[20];
 
     // for(int i = 0; i<15; i++){
     //     itoa(i,buffer,10);
+    
+        // strcpy(temp.userID, "123456");
+        // strcpy(temp.LastName, "Balanesko");
+        // strcpy(temp.FirstName, "Aleksandar");
+        // temp.Rating = 3;
+        // strcpy(temp.UserId, "123456");
+        
+        // strcpy(temp.ReviewText, "klfajsdlfkjasldk fjla sdflk ajslkd faksjdlfjas jh;ksla fgkljasfgasd; sklaj dfg");
+        // // strcpy(temp.Title, "Ne Karenjina");
+        // // strcpy(temp.Author, "Lav moj");
+        // // strcpy(temp.Genre[0], "Zanr1");
+        // // strcpy(temp.Genre[1], "Zanr2");
+        // // strcpy(temp.Publisher, "Laguna");
+        // // strcpy(temp.SerialName, "Template");
+        // // strcpy(temp.Tags[0], "Tag1");
+        // // temp.numberOfCopies = 1;
+        // temp.deleted = 0;
+        // // temp.ReturnDate.year = 0;
 
-    //     strcpy(temp.ISBN, buffer);
-    //     temp.deleted = 0;
-
-    //     DB_insert(BookT, &temp);
+        // DB_insert(UserT, &temp);
     // }
 
     pressEnter();
