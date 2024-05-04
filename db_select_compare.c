@@ -10,6 +10,16 @@ int compareByUserID(void* record, char* key) {
     return strcmp(user->userID, key);
 }
 
+int compareByUsername(void* record, char* key) {
+    User* user = (User*)record;
+    return strcmp(user->Username, key);
+}
+
+int compareByPassword(void* record, char* key) {
+    User* user = (User*)record;
+    return strcmp(user->Password, key);
+}
+
 int compareSelectEverything(void* record, char* key){
     return 0;
 }
