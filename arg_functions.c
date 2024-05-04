@@ -11,8 +11,8 @@
 
 void printBookItem(void* item, int k, int column_width){
     char* info = getBookInformation((Book*)item, k);
-    printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", getBookInformation((Book*)item, k), 
-            fillTimesN(' ', column_width - strlen(getBookInformation((Book*)item, k))), fillTimesN(' ', 3));
+    printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", info, 
+            fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
     if(k == 3) free(info);
 }
 

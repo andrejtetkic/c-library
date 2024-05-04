@@ -10,6 +10,8 @@ int compareByUserID(void* record, char* key) {
     return strcmp(user->userID, key);
 }
 
+
+
 int compareByBookISBN(void* record, char* key)
 {
     Book* book = (Book*)record;
@@ -38,4 +40,9 @@ int compareByRentalReturnYearEqZero(void* record, char* key){
 int compareByReviewUserID(void* record, char* key){
     Review* review = (Review*)record;
     return strcmp(review->UserId, key);
+}
+
+int compareByReviewUserIDEqActiveUserID_AND_ReviewBookISBN(void* record, char* key) {
+    Review* review = (Review*)record;
+    return !((!strcmp(review->UserId, activeUser.userID)) && (!strcmp(review->BookISBN, key)));
 }

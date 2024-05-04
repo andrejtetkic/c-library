@@ -8,5 +8,6 @@ int compareByReviewBookISBN(void* record, char* key);
 int compareByRentalBookISBN(void* record, char* key);
 int compareByRentalReturnYearEqZero(void* record, char* key);
 int compareByReviewUserID(void* record, char* key);
+int compareByReviewUserIDEqActiveUserID_AND_ReviewBookISBN(void* record, char* key);
 
 #endif /* DB_SELECT_COMPARE_H_INCLUDED */
