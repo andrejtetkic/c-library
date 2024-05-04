@@ -12,7 +12,7 @@ void createBook(int language)
 {
    Book k;
 
-    printf("-------%s-------\n", getTranslation("new_book", language));
+    printf("-------%s-------\n", getTranslation("nw_book", language));
     
     do{
 

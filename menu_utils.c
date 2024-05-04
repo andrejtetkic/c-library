@@ -221,6 +221,7 @@ char* getBookInformation(Book* item, int k){
                 { compareByReviewBookISBN, item->ISBN }, 
             };
 
+            char* formatted_str = (char*)malloc(50 * sizeof(char));
             int num_found = 0;
             float avg_rating = 0;
             Review* reviews =  DB_select(ReviewT, compare_pairs, sizeof(compare_pairs), &num_found);
@@ -230,11 +231,12 @@ char* getBookInformation(Book* item, int k){
                     avg_rating += (float)reviews[i].Rating / num_found;
                 }
             } else {
+                snprintf(formatted_str, 100, "");
                 free(reviews);
-                return "";
+                return formatted_str;
             }
 
-            char* formatted_str = (char*)malloc(50 * sizeof(char));
+            
             snprintf(formatted_str, 50, "%.2f* (%d)", avg_rating, num_found);
 
             free(reviews);

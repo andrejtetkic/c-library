@@ -13,8 +13,11 @@
 
 int main(){
 
-   initializeTranslationTable();
-   landingPage();
+    initializeTranslationTable();
+    landingPage();
+        
+    // createBook(activeUser.language);
+    pressEnter();
 
     return 0;
 }

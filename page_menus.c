@@ -188,7 +188,7 @@ void bookView(void* item){
             clearScreen();
 
             ComparisonPair compare_pairs[] = {
-                { compareByReviewUserID, activeUser.userID}, 
+                { compareByReviewUserIDEqActiveUserID_AND_ReviewBookISBN, active_book->ISBN}, 
             };
                     
             int num_found;
