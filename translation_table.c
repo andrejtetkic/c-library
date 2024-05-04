@@ -69,6 +69,17 @@ int initializeTranslationTable() {
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
     insert("no_results", "No Results Found", "Nista nije pronadjeno :(");
+    insert("genres", "Gneres", "Zanrovi");
+    insert("tags", "Tags", "Tagovi");
+    insert("tag", "Tag", "Tag");
+    insert("publ", "Publisher", "Izdavac");
+    insert("publication_year", "Publication Year", "Godina Izdavanja");
+    insert("number_of_copies", "Number Of Copies", "Broj Kopija");
+    insert("serial_name", "Serial Name", "Ime Serijala");
+    insert("serial_number", "Serial Number", "Broj Knjige Serijala");
+    insert("num_pg", "Number Of Pages", "Broj Stranica");
+    insert("new_book", "INSERT NEW BOOK", "UNOS NOVE KNJIGE");
+
     insert("in_stock", "In Stock", "Na Stanju");
     insert("out_stock", "Out of Stock", "Nije na Stanju");
     insert("title", "Title", "Naziv");

@@ -4,5 +4,7 @@
 void landingPage();
 void logIn();
 void browse();
+void mainPaigeUser();
+void mainPaigeAdmin();
 
 #endif /* PAGE_MENUS_H_INCLUDED */

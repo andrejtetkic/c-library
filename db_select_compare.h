@@ -2,6 +2,7 @@
 #define DB_SELECT_COMPARE_H_INCLUDED
 
 int compareByUserID(void* record, char* key);
+int compareByBookISBN(void* record, char* key);
 int compareSelectEverything(void* record, char* key);
 int compareByReviewBookISBN(void* record, char* key);
 int compareByRentalBookISBN(void* record, char* key);

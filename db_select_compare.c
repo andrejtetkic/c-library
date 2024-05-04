@@ -10,6 +10,12 @@ int compareByUserID(void* record, char* key) {
     return strcmp(user->userID, key);
 }
 
+int compareByBookISBN(void* record, char* key)
+{
+    Book* book = (Book*)record;
+    return strcmp(book->ISBN, key);
+}
+
 int compareSelectEverything(void* record, char* key){
     return 0;
 }

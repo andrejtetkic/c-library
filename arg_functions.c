@@ -48,6 +48,10 @@ void getFullReview(void* item){
     pressEnter();
 }
 
+void tempMainScreenButtonSellectEnterFunc(void* item){
+    printf("selected button: %s", *(char*)item);
+} 
+
 int wrapperEmpty(){
     return 0;
 }
