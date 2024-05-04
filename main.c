@@ -14,27 +14,7 @@
 int main(){
 
    initializeTranslationTable();
-
-    // Book temp;
-
-    // char buffer[20];
-
-    // for(int i = 0; i<15; i++){
-    //     itoa(i,buffer,10);
-
-    //     strcpy(temp.ISBN, buffer);
-    //     temp.deleted = 0;
-
-    //     DB_insert(BookT, &temp);
-
-     // }
-
-
-   // pressEnter(); 
-
-    int a = 1;
-   
-    createBook(a);
+   landingPage();
 
     return 0;
 }

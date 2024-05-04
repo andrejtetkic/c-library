@@ -69,19 +69,40 @@ int initializeTranslationTable() {
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
     insert("no_results", "No Results Found", "Nista nije pronadjeno :(");
-    insert("title", "Naziv", "Title");
-    insert("author", "Autor", "Author");
-    insert("genre", "Zanr", "Genre");
-    insert("genres", "Zanrovi", "Gneres");
-    insert("tags", "Oznake", "Tags");
-    insert("tag", "Oznaka", "Tag");
-    insert("publ", "Izdavac", "Publisher");
-    insert("publication_year", "Godina Izdavanja", "Publication Year");
-    insert("number_of_copies", "Broj Izdanja", "Number Of Copies");
-    insert("serial_name", "Serijsko Ime", "Serial Name");
-    insert("serial_number", "Serijski Broj", "Serial Number");
-    insert("num_pg", "Broj Stranica", "Number Of Pages");
-    insert("new_book", "UNOS NOVE KNJIGE", "INSERT NEW BOOK");
+    insert("genres", "Gneres", "Zanrovi");
+    insert("tags", "Tags", "Tagovi");
+    insert("tag", "Tag", "Tag");
+    insert("publ", "Publisher", "Izdavac");
+    insert("publication_year", "Publication Year", "Godina Izdavanja");
+    insert("number_of_copies", "Number Of Copies", "Broj Kopija");
+    insert("serial_name", "Serial Name", "Ime Serijala");
+    insert("serial_number", "Serial Number", "Broj Knjige Serijala");
+    insert("num_pg", "Number Of Pages", "Broj Stranica");
+    insert("new_book", "INSERT NEW BOOK", "UNOS NOVE KNJIGE");
+
+    insert("in_stock", "In Stock", "Na Stanju");
+    insert("out_stock", "Out of Stock", "Nije na Stanju");
+    insert("title", "Title", "Naziv");
+    insert("author", "Author", "Autor");
+    insert("series", "Series", "Serijal");
+    insert("book_num", "book number", "knjiga broj");
+    insert("pages", "Number of Pages", "Broj Stranica");
+    insert("genre", "Genre", "Zanr");
+    insert("tags", "Tags", "Tagovi");
+    insert("published", "Published by", "Objavio");
+    insert("in", "in", "");
+    insert("back_br", "Back to Browsing", "Nazad na Pregledanje");
+    insert("rentT", "Rent This", "Iznajmi");
+    insert("rev", "Reviews", "Recenzije");
+    insert("lev_rev", "Leave a Review", "Postavite Recenziju");
+    insert("edit", "Edit", "Izmeni");
+    insert("delete", "Delete", "Izbrisi");
+    insert("review", "Review", "Oceni");
+    insert("rating", "Rating", "Ocena");
+    insert("detiles", "Share Details", "Podelite Detalje");
+    insert("alr_rev", "You have Already left a Review on this Book", "Vec ste Ocenili ovu Knjigu");
+
+
 
     return 0;
 }
