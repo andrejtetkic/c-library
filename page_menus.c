@@ -74,14 +74,33 @@ void logIn(){
     // set active user
     User temp;
     strcpy(temp.userID, "123456");
-    strcpy(temp.name, "N123456");
+    strcpy(temp.Username, "N123456");
     temp.language = 1;
+
+    ComparisonPair compare_pairs[] = {
+         { compareByUsername, "123456" }, 
+         { compareByPassword, "N123456" },
+         /* { compareBySomeField, "some_value" } */
+     };
+
+     int num_found;
+     User* found_users = DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
+     if (found_users != NULL) {
+         printf("Found %d user(s):\n", num_found);
+         for (int i = 0; i < num_found; i++) {
+             printf("User ID: %s\n", found_users[i].userID);
+         }
+         free(found_users);
+     } else {
+         printf("No matching records found.\n");
+     }
+
 
     activeUser = temp;
 
     // this will later call mainmenu function
     //for testing purpuses calling browse
-    browse();
+    /* browse(); */
 }
 
 
