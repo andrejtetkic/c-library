@@ -11,7 +11,8 @@ int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int
 void fillInForm(char* buf);
 void logInArt();
 char* getBookInformation(Book* item, int k);
+char* getReviewInformation(Review* item, int k);
 void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, ObjectEnterMenu enter_function, int column_width, int row_height, PrintWrapper preWrapper, PrintWrapper postWrapper);
-
+char* randomID();
 
 #endif /* MENU_UTILS_H_INCLUDED */

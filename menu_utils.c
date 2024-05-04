@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <math.h>
+#include <time.h>
 
 #include "utilities.h"
 #include "menu_utils.h"
@@ -143,15 +144,55 @@ void logInArt(){
 
 }
 
+
+char* getReviewInformation(Review* item, int k){
+    switch (k)
+    {
+        case 0:{
+            ComparisonPair compare_pairs[] = {
+                { compareByUserID, item->UserId }, 
+            };
+
+            int num_found = 0;
+            User* user =  DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
+            char* formatted_str_user_name = (char*)malloc(50 * sizeof(char));
+
+
+            if (user == NULL) {
+                snprintf(formatted_str_user_name, 100, "Deleted User");
+                return formatted_str_user_name;
+            }
+
+            snprintf(formatted_str_user_name, 100, "%s %s", user[0].FirstName, user[0].LastName);
+            
+            return formatted_str_user_name;
+        }
+        case 1:{
+            char* formatted_str_rating = (char*)malloc(50 * sizeof(char));
+            snprintf(formatted_str_rating, 50, "%d*", item->Rating);
+            return formatted_str_rating;
+        }
+        
+        case 2:
+            return "";
+        
+        case 3:{
+            char* target = (char*)malloc(50 * sizeof(char));
+
+            if(strcmp(item->ReviewText, "") != 0){
+                *target = '\0';
+                strncat(target, item->ReviewText, 45);
+                if(strlen(item->ReviewText) > 45) strcat(target, "...");
+                return target;
+            }
+            snprintf(target, 100, "");
+            return target;
+
+        }
+    }
+}
+
 char* getBookInformation(Book* item, int k){
-
-    char* naziv[100];
-    char* autor[100];
-    char* dostupnost[35];
-
-    *naziv = "Naziv Knjige i biblioteka";
-    *autor = "R. R. Martin";
-    *dostupnost = "Na Stanju";
 
 
     switch (k)
@@ -187,7 +228,6 @@ char* getBookInformation(Book* item, int k){
             snprintf(formatted_str, 50, "%.2f* (%d)", avg_rating, num_found);
 
             free(reviews);
-
             return formatted_str;
 
         }
@@ -233,7 +273,7 @@ void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDis
     char* temp_text[35];
     int break_point = -1;
     for(int j = start_from_index; j < start_from_index + max_books_to_show / (books_per_row) ; j++){
-        for(int k = 0; k < 5; k++){
+        for(int k = 0; k < row_height-2; k++){
             for(int i = 0; i < books_per_row; i++){
                 if(books_per_row*j + i == num_items) break_point = i;
                 
@@ -285,4 +325,17 @@ void browseInitiate(ObjectDisplayTemplate printOne, ObjectDisplayTemplate printO
 
         if(ch == ENTER) enter_function(items + selected_index*size_of_item);
     }
+}
+
+char* randomID(int len) {
+    srand(time(NULL));
+    const char ALLOWED[] = "abcdefghijklmnopqrstuvwxyz1234567890";
+    char* random = (char*)malloc((len+1) * sizeof(char)); // Allocate memory for the string
+    int i, c, nbAllowed = sizeof(ALLOWED) - 1;
+    for (i = 0; i < len; i++) {
+        c = rand() % nbAllowed;
+        random[i] = ALLOWED[c];
+    }
+    random[len] = '\0';
+    return random;
 }

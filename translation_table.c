@@ -86,6 +86,11 @@ int initializeTranslationTable() {
     insert("lev_rev", "Leave a Review", "Postavite Recenziju");
     insert("edit", "Edit", "Izmeni");
     insert("delete", "Delete", "Izbrisi");
+    insert("review", "Review", "Oceni");
+    insert("rating", "Rating", "Ocena");
+    insert("detiles", "Share Details", "Podelite Detalje");
+    insert("alr_rev", "You have Already left a Review on this Book", "Vec ste Ocenili ovu Knjigu");
+
 
 
     return 0;

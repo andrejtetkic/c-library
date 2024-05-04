@@ -75,9 +75,11 @@ void logIn(){
 
     // set active user
     User temp;
-    strcpy(temp.userID, "123456");
-   // strcpy(temp.name, "N123456");
-    temp.language = RS_LANG;
+    strcpy(temp.userID, "3574");
+    strcpy(temp.FirstName, "Dimitrije");
+    strcpy(temp.LastName, "Sakan");
+
+    temp.language = EN_LANG;
     temp.Privilege = 1;
     activeUser = temp;
 
@@ -92,8 +94,11 @@ int bookViewInformation(){
 
     printf("%s: %s\n", getTranslation("title", activeUser.language), active_book->Title);
     printf("%s: %s\n", getTranslation("author", activeUser.language), active_book->Author);
-    printf("%s: %s, %s %d\n", getTranslation("series", activeUser.language), active_book->SerialName, getTranslation("book_num", activeUser.language), active_book->SerialNumber);
-    printf("%s: %d\n", getTranslation("pages", activeUser.language), active_book->NumberOfPages);
+    if(strcmp(active_book->SerialName, "") != 0)
+        printf("%s: %s, %s %d\n", getTranslation("series", activeUser.language), active_book->SerialName, getTranslation("book_num", activeUser.language), active_book->SerialNumber);
+    
+    if(active_book->NumberOfPages != 0)
+        printf("%s: %d\n", getTranslation("pages", activeUser.language), active_book->NumberOfPages);
 
     if(strcmp(active_book->Genre[0], "") != 0) printf("%s: ", getTranslation("genre", activeUser.language));
     for(int i = 0; i < 10; i++){
@@ -124,7 +129,7 @@ int bookViewInformation(){
     int num_found = 0;
     Rental* rentals =  DB_select(RentalT, compare_pairs, sizeof(compare_pairs), &num_found);
     if (rentals == NULL)
-        num_found = 0;
+        num_found = 0; // to make sure it didnt change anything
 
     free(rentals);
 
@@ -158,14 +163,70 @@ void bookView(void* item){
             printf("Renting This");
             pressEnter();
             break;
-        case 2:
+        case 2: {
             clearScreen();
-            printf("Reviews Here");
-            pressEnter();
+            
+
+            ComparisonPair compare_pairs[] = {
+                { compareByReviewBookISBN, active_book->ISBN }, 
+            };
+                    
+            int num_found;
+            Review* found_reviews = DB_select(ReviewT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+
+            if (found_reviews != NULL) {
+                browseInitiate(printRentedItem, printRentedItemSelected, found_reviews, sizeof(Review), num_found, getFullReview, 50, 6, wrapperEmpty, wrapperEmpty);
+            } else {
+                printf("%s\n", getTranslation("no_results", activeUser.language));
+                pressEnter();
+            }
+
             break;
+        }
         case 3:
             clearScreen();
-            printf("Leaving a review");
+
+            ComparisonPair compare_pairs[] = {
+                { compareByReviewUserID, activeUser.userID}, 
+            };
+                    
+            int num_found;
+            Review* found_reviews = DB_select(ReviewT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+            if(num_found > 0){
+                printf("%s", getTranslation("alr_rev", activeUser.language));
+                pressEnter();
+                break;
+            }
+
+            printf("-------- %s %s --------\n\n", getTranslation("review", activeUser.language), active_book->Title);
+
+            char temp_str[50];
+            Review temp;
+            temp.Rating = 0;
+            do
+            {
+                fflush(stdin);
+                printf("%s:  *\b\b", getTranslation("rating", activeUser.language));
+                scanf("%[0-9]", &temp_str);
+                temp.Rating = atoi(temp_str);
+            } while (temp.Rating < 1 || temp.Rating > 5);
+
+            fflush(stdin);
+            printf("\n%s: \n", getTranslation("detiles", activeUser.language));
+            scanf("%[^\n]", &temp.ReviewText);
+
+            strcpy(temp.BookISBN, active_book->ISBN);
+            temp.deleted = 0;
+            strcpy(temp.UserId, activeUser.userID);
+
+            char* ran_id = randomID(9);
+            strcpy(temp.reviewID, ran_id);
+
+            DB_insert(ReviewT, &temp);
+            
+            free(ran_id);
             pressEnter();
             break;
         default:
@@ -187,7 +248,7 @@ void bookView(void* item){
             break;
         case 2:
             clearScreen();
-            printf("Deleating");
+            printf("Deleting");
             pressEnter();
             break;
         default:

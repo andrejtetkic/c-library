@@ -28,3 +28,8 @@ int compareByRentalReturnYearEqZero(void* record, char* key){
     Rental* rental = (Rental*)record;
     return rental->RentDate.year != 0;
 }
+
+int compareByReviewUserID(void* record, char* key){
+    Review* review = (Review*)record;
+    return strcmp(review->UserId, key);
+}
