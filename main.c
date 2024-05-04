@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #include "translation_table.h"
 #include "page_menus.h"
 #include "utilities.h"
 #include "db_system.h"
-#include "db_select_compare.h"
+#include "db_select_compare.h" 
+#include "book_funcs.h"
 
 
 int main(){
-    initializeTranslationTable();
 
-    landingPage();
+   initializeTranslationTable();
 
     // Book temp;
 
@@ -25,8 +26,15 @@ int main(){
     //     temp.deleted = 0;
 
     //     DB_insert(BookT, &temp);
-    // }
 
-    pressEnter();
+     // }
+
+
+   // pressEnter(); 
+
+    int a = 1;
+   
+    createBook(a);
+
     return 0;
 }

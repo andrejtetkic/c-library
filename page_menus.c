@@ -74,7 +74,7 @@ void logIn(){
     // set active user
     User temp;
     strcpy(temp.userID, "123456");
-    strcpy(temp.name, "N123456");
+    strcpy(temp.Username, "N123456");
     temp.language = 1;
 
     activeUser = temp;
@@ -106,3 +106,17 @@ void browse(){
     free(found_books);
 
 }
+
+void mainPaigeUser()
+{
+
+   /* char *buttons[] = {"Browse", "Search", "MyRental", "Profile"};
+
+    // problem with browse intiate
+
+    browseInitiate(printButton, printButtonSelected, buttons, sizeof(char) * 10, 4, tempMainScreenButtonSellectEnterFunc, 35, 7, wrapperEmpty, wrapperEmpty);
+
+    */
+}
+
+

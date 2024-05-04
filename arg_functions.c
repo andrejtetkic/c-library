@@ -19,12 +19,27 @@ void printBookItemSelected(void* item, int k, int column_width){
             fillTimesN(' ', column_width - strlen(getBookInformation((Book*)item, k))), fillTimesN(' ', 3));
 }
 
+/*void printButton(void* item, int k, int collumn_width)
+{
+    printf(ANSI_COLOR_GRAY "%s%s" ANSI_COLOR_RESET "%s", item, 
+        fillTimesN(' ', collumn_width - strlen(*(char*)item)), fillTimesN(' ', 3));
+}
+
+void printButtonSelected(void* item, int k, int collumn_width)
+{
+    printf(ANSI_COLOR_RED "%s%s" ANSI_COLOR_RESET "%s", item,
+        fillTimesN(' ', collumn_width - strlen(*(char*)item)), fillTimesN(' ', 3));
+}*/
 
 
 void tempEnterFunc(void* item){
     printf("selected item ISBN = %s", ((Book*)item)->ISBN);
     pressEnter();
 }
+
+void tempMainScreenButtonSellectEnterFunc(void* item){
+    printf("selected button: %s", *(char*)item);
+} 
 
 int wrapperEmpty(){
     return 0;
