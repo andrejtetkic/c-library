@@ -25,8 +25,8 @@ void createBook(int language)
 
     insertBookInfo(&k, language);
 
-    DB_insert(BookT, k.ISBN);
-    DB_insert(BookRST, k.ISBN);
+    DB_insert(BookT, &k);
+    DB_insert(BookRST, &k);
 
 }
 

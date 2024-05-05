@@ -83,9 +83,7 @@ void logIn(){
     temp.Privilege = 1;
     activeUser = temp;
 
-    // this will later call mainmenu function
-    //for testing purpuses calling browse
-    browse();
+    mainPaige();
 }
 
 int bookViewInformation(){
@@ -281,14 +279,31 @@ void browse(){
 
 void mainPaigeUser()
 {
+    clearScreen();
 
-   /* char *buttons[] = {"Browse", "Search", "MyRental", "Profile"};
+    char options[5][35] = {"BROWSE", "SEARCH", "MY RENTAL", "EDIT PROFILE", "RETURN"};
 
-    // problem with browse intiate
+    browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 5, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
+}
+void mainPaigeAdmin()
+{
+    clearScreen();
 
-    browseInitiate(printButton, printButtonSelected, buttons, sizeof(char) * 10, 4, tempMainScreenButtonSellectEnterFunc, 35, 7, wrapperEmpty, wrapperEmpty);
+    char options[6][35] = {"BROWSE", "SEARCH", "LOG", "EDIT PROFILE", "ADD BOOK", "RETURN"};
 
-    */
+     browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 6, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
+}
+void mainPaige()
+{
+    if (activeUser.Privilege == 0)
+        mainPaigeAdmin();
+    else if (activeUser.Privilege == 1)
+        mainPaigeUser();
+    else{
+        printf("Doslo je do greske prilikom ucitavanja korisnika!\n");
+        landingPage();
+    }
+
 }
 
 

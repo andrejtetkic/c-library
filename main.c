@@ -13,11 +13,17 @@
 
 int main(){
 
-    initializeTranslationTable();
-    landingPage();
+     initializeTranslationTable();
+    //landingPage();
         
     // createBook(activeUser.language);
-    pressEnter();
+    //pressEnter(); */
+
+
+    activeUser.Privilege = 0;
+
+    mainPaige();
+
 
     return 0;
 }

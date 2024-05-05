@@ -11,6 +11,8 @@
 
 #include "db_system.h"
 #include "db_select_compare.h"
+#include "page_menus.h"
+#include "book_funcs.h"
 
 void contorlSelectedIndex(int ch, int* selected_index, int columns){
     switch (ch)
@@ -144,14 +146,17 @@ void logInArt(){
 
 }
 
-void welcomeArt()
+int welcomeArt()
 {
-    printf("\t\t\t" "__          __   ______    _         _______   _______    _    _    ______\n");
-    printf("\t\t\t" "\\ \\        / /  |  ____|  | |        | _____| | _____ |  | \\  / |  |  ____|\n");
-    printf("\t\t\t" " \\ \\  /\\  / /   | |____   | |        | |      | |   | |  |  \\/  |  | |____\n");
-    printf("\t\t\t" "  \\ \\/  \\/ /    |  ____|  | |        | |      | |   | |  | |\\/| |  |  ____|\n");
-    printf("\t\t\t" "   \\  /\\  /     | |____   | |_____   | |____  | |___| |  | |  | |  | | ___\n");
-    printf("\t\t\t" "    \\/  \\/      |______|  |_______|  |______| |_______|  |_|  |_|  |______|\n");
+    printf("\n\n\n");
+    printf("\t\t\t\t__        __   _                          \n");
+    printf("\t\t\t\t\\ \\      / /__| | ___ ___  _ __ ___   ___ \n");
+    printf("\t\t\t\t \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ \n");
+    printf("\t\t\t\t  \\ V  V /  __/ | (_| (_) | | | | | |  __/\n");
+    printf("\t\t\t\t   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n");
+    printf("\n\n\n");
+
+    return 11;
 }
 
 
@@ -351,3 +356,116 @@ char* randomID(int len) {
     random[len] = '\0';
     return random;
 }
+void printMainMenuItem(void* item, int k, int column_width){
+    
+    if(k == 1){
+        printf(ANSI_B_COLOR_GRAY " %s%s%s" ANSI_COLOR_RESET "%s", fillTimesN(' ', (column_width - strlen((char*)item))/2), (char*)item, 
+                fillTimesN(' ', column_width - (column_width - strlen((char*)item))/2 - strlen((char*)item)), fillTimesN(' ', 3));
+    } else{
+        printf(ANSI_B_COLOR_GRAY " %s" ANSI_COLOR_RESET "%s", 
+                    fillTimesN(' ', column_width), fillTimesN(' ', 3));
+    }
+}
+
+void printMainMenuItemSelected(void* item, int k, int column_width){
+    
+    if(k == 1){
+        printf(ANSI_B_COLOR_RED " %s%s%s" ANSI_COLOR_RESET "%s", fillTimesN(' ', (column_width - strlen((char*)item))/2), (char*)item, 
+                fillTimesN(' ', column_width - (column_width - strlen((char*)item))/2 - strlen((char*)item)), fillTimesN(' ', 3));
+    } else{
+        printf(ANSI_B_COLOR_RED " %s" ANSI_COLOR_RESET "%s", 
+                    fillTimesN(' ', column_width), fillTimesN(' ', 3));
+    }
+}
+
+void mainMenuEnterFunc(void* item){
+    
+    char* op = (char*)item;
+
+    switch(activeUser.Privilege)
+    {
+        case 0:
+        {
+            // admin
+
+            if (strcmp(op, "BROWSE") == 0)
+            {
+                clearScreen();
+                browse();
+            }
+            else if(strcmp(op, "SEARCH") == 0)
+            {
+                printf("searching...");
+                // will call for search func when it is completed               
+            }
+            else if(strcmp(op, "LOG") == 0)
+            {
+               printf("loging...");
+                // will call for log func when it is completed
+            }
+            else if (strcmp(op, "EDIT PROFILE") == 0)
+            {
+                printf("editing profile...");
+                //will call for edit profile func for admin when it is completed
+            }
+            else if (strcmp(op, "ADD BOOK") == 0)
+            {
+                clearScreen();
+                createBook(activeUser.language);
+            }
+            else if(strcmp(*op, "RETURN") == 0)
+            {
+                clearScreen();
+                landingPage();
+            }
+            else
+            {
+                printf("GRESKA!");
+            }
+            
+            break;
+        }
+
+        case 1:
+        {
+            // user
+
+            if (strcmp(op, "BROWSE") == 0)
+            {
+                clearScreen();
+                browse();
+            }
+            else if(strcmp(op, "SEARCH") == 0)
+            {
+                printf("searching....");
+                //this will call for search fuc when it is completed
+            }
+            else if(strcmp(op, "MY RENTAL") == 0)
+            {
+                printf("my rentals....");
+                //this will call for my rentals func when it is completed
+            }
+            else if(strcmp(op, "EDIT PROFILE") == 0)
+            {
+                printf("editing profile...");
+                //this will call for edit profile func for user when it is completed
+            }
+            else if(strcmp(op, "RETURN") == 0)
+            {
+                landingPage();
+            }
+            else
+            {
+                printf("GRESKA!");
+            }
+
+            break;
+        }
+
+        default: 
+        {
+            printf("GRESKA SA KORISNIKOM!");
+        }
+    }
+}
+

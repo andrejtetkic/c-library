@@ -6,5 +6,6 @@ void logIn();
 void browse();
 void mainPaigeUser();
 void mainPaigeAdmin();
+void mainPaige();
 
 #endif /* PAGE_MENUS_H_INCLUDED */
