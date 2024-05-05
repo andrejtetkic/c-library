@@ -9,7 +9,7 @@
 #include "db_select_compare.h"
 #include "translation_table.h"
 #include "arg_functions.h"
-
+void SignUp();
 void logIn();
 void browse();
 
@@ -30,7 +30,7 @@ void landingPage(){
     
     case 1:
         // TODO
-        printf("SignIn Screen");
+        SignUp();
         break;
     
     default:
@@ -39,6 +39,87 @@ void landingPage(){
     
 }
 
+ void SignUp(){
+    // Enter first name
+    clearScreen();
+    SignUpArt();
+    
+    int firstName_len = 34;
+    printf("\t\t\t| " ANSI_COLOR_GRAY "First name%s" ANSI_COLOR_RESET "|%s", 
+        fillTimesN(' ', firstName_len - 9), fillTimesN('\b', firstName_len) );
+    
+    char firstName[200] = {0};
+    fillInForm(firstName);
+    DB_insert(UserT, &firstName);
+
+    // Enter last name
+    clearScreen();
+    SignUpArt();
+    
+    int lastName_len = 34;
+    printf("\t\t\t| " ANSI_COLOR_GRAY "Last name%s" ANSI_COLOR_RESET "|%s", 
+        fillTimesN(' ', lastName_len - 9), fillTimesN('\b', lastName_len) );
+    
+    char lastName[200] = {0};
+    fillInForm(lastName);
+
+    // Enter Username
+
+    clearScreen();
+    SignUpArt();
+    
+    int username_len = 34;
+    printf("\t\t\t| " ANSI_COLOR_GRAY "Username%s" ANSI_COLOR_RESET "|%s", 
+        fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
+    
+    char username[200] = {0};
+    fillInForm(username);
+
+    // Enter Password
+
+    clearScreen();
+    SignUpArt();
+
+    printf("\t\t\t| %s%s|\n", username,
+        fillTimesN(' ', username_len - strlen(username) - 1));
+    printf("\t\t\t| " ANSI_COLOR_GRAY "Password%s" ANSI_COLOR_RESET "|%s",
+        fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
+
+    char password[200] = {0};
+    fillInForm(password);
+
+    // Enter Password Again
+
+    clearScreen();
+    SignUpArt();
+
+    printf("\t\t\t| %s%s|\n", username,
+        fillTimesN(' ', username_len - strlen(username) - 1));
+
+    printf("\t\t\t| %s%s|\n", password,
+        fillTimesN(' ', username_len - strlen(password) - 1));
+
+    printf("\t\t\t| " ANSI_COLOR_GRAY "Password%s" ANSI_COLOR_RESET "|%s", 
+        fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
+
+    char password2[200] = {0};
+    fillInForm(password2);
+
+    // Check if passwords match
+
+    if(strcmp(password, password2) != 0){
+        clearScreen();
+        SignUpArt();
+        printf("\t\t\t| %s%s|\n", username,
+            fillTimesN(' ', username_len - strlen(username) - 1));
+        printf("\t\t\t| %s%s|\n", password,
+            fillTimesN(' ', username_len - strlen(password) - 1));
+        printf("\t\t\t| %s%s|\n", password2,
+            fillTimesN(' ', username_len - strlen(password2) - 1));
+        printf("\t\t\t| " ANSI_COLOR_RED "Passwords do not match%s" ANSI_COLOR_RESET "|%s", 
+            fillTimesN(' ', username_len - 20), fillTimesN('\b', username_len) );
+    }
+}
 
 void logIn(){
     //
@@ -100,7 +181,7 @@ void logIn(){
 
     // this will later call mainmenu function
     //for testing purpuses calling browse
-    /* browse(); */
+     browse(); 
 }
 
 

@@ -8,6 +8,8 @@
         "stdlib.h": "c",
         "page_menus.h": "c",
         "db_select_compare.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "arg_functions.h": "c",
+        "menu_utils.h": "c"
     }
 }

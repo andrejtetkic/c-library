@@ -132,6 +132,14 @@ void fillInForm(char* buf){
     }
 }
 
+void SignUpArt(){
+    printf("\n\n\n");
+    printf("\t\t\t" ANSI_COLOR_BRIGHT_BLUE "  ___ ___ ___ _  _   _   _ ___ \n");
+    printf("\t\t\t" " / __|_ _/ __| \\| | | | | | _ \\\n");
+    printf("\t\t\t" " \\__ \\| | (_ | .` | | |_| |  _/\n");
+    printf("\t\t\t" " |___/___\\___|_|\\_|  \\___/|_|  \n\n" ANSI_COLOR_RESET);
+
+}
 void logInArt(){
     printf("\n\n\n");
     printf("\t\t\t" ANSI_COLOR_BRIGHT_BLUE " _      ___    ___        ___  _  _ \n");
