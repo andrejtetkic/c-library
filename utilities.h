@@ -1,6 +1,8 @@
 #ifndef UTILITIES_H_INCLUDED
 #define UTILITIES_H_INCLUDED
 
+#include "db_system.h"
+
 #define UP_ARROW 72 
 #define DOWN_ARROW 80
 #define LEFT_ARROW 75
@@ -37,6 +39,9 @@ const char* fillTimesN(char character, int len);
 void fillInForm(char* buf);
 int windowHeight();
 int windowWidth();
+int compareByRentalID(void* record, char* key);
+void rentBook(Book* book);
+int returnBook(char* rentalID);
 
 
 #endif /* UTILITIES_H_INCLUDED */

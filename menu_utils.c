@@ -13,6 +13,7 @@
 #include "db_select_compare.h"
 #include "page_menus.h"
 #include "book_funcs.h"
+#include "arg_functions.h"
 
 void contorlSelectedIndex(int ch, int* selected_index, int columns){
     switch (ch)
@@ -149,14 +150,30 @@ void logInArt(){
 int welcomeArt()
 {
     printf("\n\n\n");
-    printf("\t\t\t\t__        __   _                          \n");
-    printf("\t\t\t\t\\ \\      / /__| | ___ ___  _ __ ___   ___ \n");
-    printf("\t\t\t\t \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ \n");
-    printf("\t\t\t\t  \\ V  V /  __/ | (_| (_) | | | | | |  __/\n");
-    printf("\t\t\t\t   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n");
+    printf("\t\t\t\t\t  __        __   _                          \n");
+    printf("\t\t\t\t\t  \\ \\      / /__| | ___ ___  _ __ ___   ___ \n");
+    printf("\t\t\t\t\t   \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ \n");
+    printf("\t\t\t\t\t    \\ V  V /  __/ | (_| (_) | | | | | |  __/\n");
+    printf("\t\t\t\t\t     \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|\n");
     printf("\n\n\n");
 
     return 11;
+}
+
+int MyRentalsArt()
+{
+    printf("\n\n\n");
+    printf("\t\t\t\t\t  __  __       _____            _        _     \n");
+    printf("\t\t\t\t\t |  \\/  |     |  __ \\          | |      | |    \n");
+    printf("\t\t\t\t\t | \\  / |_   _| |__) |___ _ __ | |_ __ _| |___ \n");
+    printf("\t\t\t\t\t | |\\/| | | | |  _  // _ \\ '_ \\| __/ _` | / __|\n");
+    printf("\t\t\t\t\t | |  | | |_| | | \\ \\  __/ | | | || (_| | \\__ \\ \n");
+    printf("\t\t\t\t\t |_|  |_|\\__, |_|  \\_\\___|_| |_|\\__\\__,_|_|___/ \n");
+    printf("\t\t\t\t\t          __/ |                                \n");
+    printf("\t\t\t\t\t         |___/                                 \n");
+    printf("\n\n\n");
+
+    return 14;
 }
 
 
@@ -276,6 +293,28 @@ char* getBookInformation(Book* item, int k){
 
 }
 
+char* getRentalInformation(Rental* item, int k)
+{
+    switch(k)
+    {
+        case 0:
+        {
+            ComparisonPair cp[] = {compareByBookISBN, item->BookISBN};
+            int num_items;
+
+            Book* results = DB_select(BookT, cp, sizeof(cp), &num_items);
+
+            return results[0].Title;
+        }
+        case 1:
+        {
+            char returnString[20] = "";
+
+            sprintf(returnString, "%d.%d.%d", item->ReturnDate.day, item->ReturnDate.mounth, item->ReturnDate.year);
+        }
+    }
+}
+
 
 
 void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, int column_width, int row_height, int wrappers_size){
@@ -378,6 +417,18 @@ void printMainMenuItemSelected(void* item, int k, int column_width){
     }
 }
 
+void printRentalsItem(void* item, int k, int column_width){
+    char* info = getRentalInformation((Rental*)item, k);
+    printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", info, 
+            fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
+}
+
+void printRentalsItemSelected(void* item, int k, int column_width){
+    char* info = getRentalInformation((Rental*)item, k);
+    printf(ANSI_B_COLOR_RED " %s%s" ANSI_COLOR_RESET "%s", info, 
+            fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
+}
+
 void mainMenuEnterFunc(void* item){
     
     char* op = (char*)item;
@@ -413,14 +464,14 @@ void mainMenuEnterFunc(void* item){
                 clearScreen();
                 createBook(activeUser.language);
             }
-            else if(strcmp(*op, "RETURN") == 0)
+            else if(strcmp(op, "LOG OUT") == 0)
             {
                 clearScreen();
                 landingPage();
             }
             else
             {
-                printf("GRESKA!");
+                printf("%s", getTranslation("error", activeUser.language));
             }
             
             break;
@@ -443,14 +494,15 @@ void mainMenuEnterFunc(void* item){
             else if(strcmp(op, "MY RENTAL") == 0)
             {
                 printf("my rentals....");
-                //this will call for my rentals func when it is completed
+                
+                myRentals();
             }
             else if(strcmp(op, "EDIT PROFILE") == 0)
             {
                 printf("editing profile...");
                 //this will call for edit profile func for user when it is completed
             }
-            else if(strcmp(op, "RETURN") == 0)
+            else if(strcmp(op, "LOG OUT") == 0)
             {
                 landingPage();
             }
@@ -468,4 +520,55 @@ void mainMenuEnterFunc(void* item){
         }
     }
 }
+void rentalEnterFunc(void* item)
+{
+    Rental* r = (Rental*)item;
+
+    ComparisonPair cp[] = {compareByBookISBN, r->BookISBN};
+    int num_items;
+
+    Book* results = DB_select(BookT, cp, sizeof(cp), &num_items);
+
+    char* Title = results[0].Title;
+
+    clearScreen();
+
+    printf("%s\n", Title);
+
+
+    printf("%s %d.%d.%d. \n", getTranslation("rnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
+    printf("%s %d.%d.%d.\n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
+
+    printf("ID: %s\n", r->rentalID);
+
+    int width = 30;
+
+    char *buttons[] = {"Return Rental", "Exit"};
+    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
+
+    switch(selection)
+    {
+        case 0:
+        {
+            printf("Returning rental...");
+
+            break;
+
+            ///once renting is done this will remove rentals
+        }
+        case 1:
+        {
+            clearScreen();
+
+            myRentals();
+
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
 

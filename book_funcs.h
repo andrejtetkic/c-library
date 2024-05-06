@@ -9,5 +9,6 @@
 void createBook(int language);
 void insertBookInfo(Book* k, int langugae);
 int checkValidId(char ID[10]);
+void updateBook(Book* k, int language);
 
 #endif 

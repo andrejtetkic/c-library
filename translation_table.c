@@ -91,17 +91,24 @@ int initializeTranslationTable() {
     insert("rating", "Rating", "Ocena");
     insert("detiles", "Share Details", "Podelite Detalje");
     insert("alr_rev", "You have Already left a Review on this Book", "Vec ste Ocenili ovu Knjigu");
+    insert("error", "ERORR", "GRESKA");
+    insert("del_conf", "ARE YOU SURE YOU WANT TO DELETE THIS BOOK", "DA LI STE SIGURNI DA ZELITE DA OBRISETE OVU KNJIGU");
+    insert("del_suc", "BOOK DELETED SUCSECFULLY", "KNJIGA USPESNO OBRISANA");
+    insert("upd_bk", "UPDATE BOOK", "AZURIRAJ KNJIGU");
 
     insert("genres", "Gneres", "Zanrovi");
     insert("tags", "Tags", "Tagovi");
     insert("tag", "Tag", "Tag");
     insert("publ", "Publisher", "Izdavac");
-    insert("publication_year", "Publication Year", "Godina Izdavanja");
-    insert("num_copies", "Number Of Copies", "Broj Kopija");
-    insert("ser_name", "Serial Name", "Ime Serijala");
-    insert("serial_number", "Serial Number", "Broj Knjige Serijala");
-    insert("num_pg", "Number Of Pages", "Broj Stranica");
+    insert("pub_yr", "Publication Year", "Godina Izdavanja");
+    insert("num_cop", "Number Of Copies", "Broj Kopija");
+    insert("ser_nam", "Serial Name", "Ime Serijala");
+    insert("ser_num", "Serial Number", "Broj Knjige Serijala");
+    insert("num_pag", "Number Of Pages", "Broj Stranica");
     insert("nw_book", "INSERT NEW BOOK", "UNOS NOVE KNJIGE");
+    insert("rnt_err", "ERROR! CANNOT ACSEES RENTALS AS ADMIN", "GRESKA! NE MOZETE PRISTUPITI IZNAJMLJENIM KNJIGAMA KAO ADMIN");
+    insert("rnt_on", "Rented On", "Iznajmljeno");
+    insert("rnt_untl", "Rented Until", "Iznajmljeno do");
 
     
 
