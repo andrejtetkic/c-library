@@ -200,130 +200,7 @@ void delete(Book* k)
 
 }
 
-void currentRentals()
-{
-    ComparisonPair cp[] = {{compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero, activeUser.userID}};
 
-    int numSelected;
-
-    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
-
-    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
-}
-
-void allTimeRentals()
-{
-    ComparisonPair cp[] = {{compareByRentalUserID, activeUser.userID}};
-
-    int numSelected;
-
-    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
-
-    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
-}
-
-void myRentals()
-{
-    if (activeUser.Privilege == 0)
-    {
-        printf("%s", getTranslation("rnt_err", activeUser.language));
-    }
-
-    else
-    {
-        clearScreen();
-
-        int width = 30;
-
-        char* buttons[] = {"Current Rentals", "All Time Rentals"};
-        int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
-
-        switch (selection)
-        {
-        case 0:  
-        {
-            currentRentals();
-        }
-        case 1:
-        {
-            allTimeRentals();
-        }
-        default:
-            break;
-        }
-    }
-}
-
-void mainPaigeUser()
-{
-    clearScreen();
-
-    char options[5][35] = {"BROWSE", "SEARCH", "MY RENTAL", "EDIT PROFILE", "LOG OUT"};
-
-    browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 5, mainMenuEnterFunc, 40, 5, welcomeArt, returnRentalsMessage);
-}
-void mainPaigeAdmin()
-{
-    clearScreen();
-
-    char options[6][35] = {"BROWSE", "SEARCH", "LOG", "EDIT PROFILE", "ADD BOOK", "LOG OUT"};
-
-     browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 6, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
-}
-void mainPaige()
-{
-    if (activeUser.Privilege == 0)
-        mainPaigeAdmin();
-    else if (activeUser.Privilege == 1)
-        mainPaigeUser();
-    else{
-        printf("%s\n", getTranslation("error", activeUser.language));
-        landingPage();
-    }
-
-}
-
-void delete(Book* k)
-{
-    clearScreen();
-
-    int width = 30;
-
-    printf("%s", getTranslation("del_conf", activeUser.language));    
-
-    char *buttons[] = {"YES", "NO"};
-    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
-
-    switch (selection)
-    {
-    case 0:
-    {
-        DB_delete(k->ISBN, BookT);
-        DB_delete(k->ISBN, BookRST);
-
-        clearScreen();
-        printf("%s", getTranslation("del_suc", activeUser.language));
-        pressEnter();
-
-        clearScreen();
-        mainPaige();
-
-        break;
-    }
-    case 1:
-    {
-        clearScreen();
-        browse();
-
-        break;
-
-    }
-    
-    default:
-        break;
-    }    
-
-}
 
  void SignUp(){
     // Enter first name
@@ -472,8 +349,9 @@ void delete(Book* k)
     strcpy(signedUser.Username, username);
     strcpy(signedUser.Password, password);
     signedUser.language = language;
-    signedUser.Privilege = 0;
+    signedUser.Privilege = 1;
     DB_insert(UserT, &signedUser);
+    landingPage();
     
 }
 
@@ -485,6 +363,7 @@ void logIn(){
 
     clearScreen();
     logInArt();
+    fflush(stdin);
     
     int username_len = 34;
     printf("\t\t\t| " ANSI_COLOR_GRAY "Username%s" ANSI_COLOR_RESET "|%s", 
@@ -522,6 +401,9 @@ void logIn(){
          free(found_users);
      } else {
          printf("No matching records found.\n");
+         pressEnter();
+         logIn();
+         return;
      }
 
     mainPaige();
