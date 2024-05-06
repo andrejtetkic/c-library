@@ -483,8 +483,9 @@ void mainMenuEnterFunc(void* item){
             }
             else if (strcmp(op, "EDIT PROFILE") == 0)
             {
-                printf("editing profile...");
-                //will call for edit profile func for admin when it is completed
+                clearScreen();
+                editUser();
+                mainPaige();
             }
             else if (strcmp(op, "ADD BOOK") == 0)
             {
@@ -526,8 +527,9 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "EDIT PROFILE") == 0)
             {
-                printf("editing profile...");
-                //this will call for edit profile func for user when it is completed
+                clearScreen();
+                editUser();
+                mainPaige();
             }
             else if(strcmp(op, "LOG OUT") == 0)
             {
@@ -622,6 +624,27 @@ void rentalEnterFunc(void* item)
                 break;
             }
         }
+    }
+}
+int returnRentalsMessage()
+{
+    ComparisonPair cp[] = {{compareByRentalUserID, activeUser.userID}};
+    int num_found, showMessage = 0;
+
+    Rental* rentals = DB_select(RentalT, cp, sizeof(cp), &num_found);
+
+    for (int i = 0; i < num_found; i++)
+    {
+        int numDays = (rentals[i].RentDate.year * 365 + (rentals[i].RentDate.mounth + 1) * 30 + rentals[i].RentDate.day)
+        - (current_date.year * 365 + current_date.mounth * 30 + current_date.day);
+
+        if(numDays < 4)
+            showMessage = 1;
+    }
+
+    if (showMessage == 1)
+    {
+        printf(ANSI_COLOR_YELLOW"%s"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
     }
 }
 

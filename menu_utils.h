@@ -24,5 +24,6 @@ void printRentalsItemSelected(void* item, int k, int collumn_width);
 int myRentalsArt();
 void rentalEnterFunc(void* item);
 void rentalAllEnterFunc(void* item);
+int returnRentalsMessage();
 
 #endif /* MENU_UTILS_H_INCLUDED */

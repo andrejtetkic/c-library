@@ -42,6 +42,8 @@ int windowWidth();
 int compareByRentalID(void* record, char* key);
 void rentBook(Book* book);
 int returnBook(char* rentalID);
+void editUser();
+void insertUserInfo(User* u, int language);
 
 
 #endif /* UTILITIES_H_INCLUDED */
