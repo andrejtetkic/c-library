@@ -4,6 +4,8 @@
 int compareByUserID(void* record, char* key);
 int compareByRentalUserID(void* record, char* key);
 int compareByBookISBN(void* record, char* key);
+int compareByUsername(void* record, char* key);
+int compareByPassword(void* record, char* key);
 int compareSelectEverything(void* record, char* key);
 int compareByReviewBookISBN(void* record, char* key);
 int compareByRentalBookISBN(void* record, char* key);
