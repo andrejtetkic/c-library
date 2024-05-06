@@ -25,7 +25,7 @@ int main(){
 
     activeUser.Privilege = 0;
 
-    mainPaige();
+    landingPage();
 
 
 

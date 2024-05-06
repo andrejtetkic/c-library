@@ -631,7 +631,7 @@ int returnRentalsMessage()
     ComparisonPair cp[] = {{compareByRentalUserID, activeUser.userID}};
     int num_found, showMessage = 0;
 
-    Rental* rentals = DB_select(RentalT, cp, sizof(cp), &num_found);
+    Rental* rentals = DB_select(RentalT, cp, sizeof(cp), &num_found);
 
     for (int i = 0; i < num_found; i++)
     {
