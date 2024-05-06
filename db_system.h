@@ -75,6 +75,7 @@ typedef struct user
 } User;
 
 User activeUser;
+Date current_date, null_date;
 
 typedef int (*ComparisonCallback)(void* record, char* key);
 

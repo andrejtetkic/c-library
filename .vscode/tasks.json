@@ -17,7 +17,9 @@
                 "db_system.c",
                 "db_select_compare.c",
                 "arg_functions.c",
-
+                "book_funcs.c",
+                "insert_funcs.c",
+                
             ],
             "options": {
                 "cwd": "${fileDirname}"
