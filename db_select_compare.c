@@ -9,7 +9,11 @@ int compareByUserID(void* record, char* key) {
     User* user = (User*)record;
     return strcmp(user->userID, key);
 }
-
+int compareByRentalUserID(void* record, char* key)
+{
+    Rental* rental = (Rental*)record;
+    return strcmp(rental->UserId, key);
+}
 
 
 int compareByBookISBN(void* record, char* key)
@@ -45,4 +49,9 @@ int compareByReviewUserID(void* record, char* key){
 int compareByReviewUserIDEqActiveUserID_AND_ReviewBookISBN(void* record, char* key) {
     Review* review = (Review*)record;
     return !((!strcmp(review->UserId, activeUser.userID)) && (!strcmp(review->BookISBN, key)));
+}
+int compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero(void* record, char* key)
+{
+    Rental* rental = (Rental*)record;
+    return!((!strcmp(rental->UserId, activeUser.userID)) && !(rental->ReturnDate.year != 0));
 }

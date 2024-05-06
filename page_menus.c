@@ -44,29 +44,13 @@ void landingPage(){
 
 void currentRentals()
 {
-    ComparisonPair cp[] = {compareByUserID, activeUser.userID};
+    ComparisonPair cp[] = {{compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero, activeUser.userID}};
 
     int numSelected;
 
     Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
-    Rental *activeRentals;
 
-    int numActiveRentals = 0;
-
-    for (int i = 0; i < numSelected; i++)
-    {
-        if (rentals[i].ReturnDate.year < current_date.year 
-        || rentals[i].ReturnDate.year == current_date.year && rentals[i].ReturnDate.mounth < current_date.mounth
-        || rentals[i].ReturnDate.year == current_date.year && rentals[i].ReturnDate.mounth == current_date.mounth && rentals[i].ReturnDate.day < current_date.day)
-        {
-            activeRentals[numActiveRentals] = rentals[i];
-            numActiveRentals++;
-        }
-    }
-
-    browseInitiate(printRentalsItem, printRentalsItemSelected, activeRentals, sizeof(activeRentals), numActiveRentals, rentalEnterFunc, 30, 10, wrapperEmpty, wrapperEmpty);
-
-    
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(rentals), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt(), wrapperEmpty);
 }
 
 void allTimeRentals()

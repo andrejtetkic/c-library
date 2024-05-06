@@ -31,7 +31,9 @@ int main(){
 
    
 
-    landingPage();
+    //landingPage();
+
+   landingPage();
 
 
     return 0;

@@ -160,7 +160,7 @@ int welcomeArt()
     return 11;
 }
 
-int MyRentalsArt()
+int myRentalsArt()
 {
     printf("\n\n\n");
     printf("\t\t\t\t\t  __  __       _____            _        _     \n");
@@ -304,13 +304,22 @@ char* getRentalInformation(Rental* item, int k)
 
             Book* results = DB_select(BookT, cp, sizeof(cp), &num_items);
 
-            return results[0].Title;
+            char* returnString = (char*)malloc(50 * sizeof(char));
+
+            snprintf(returnString, 50, "%s", results[0].Title);
+ 
+            return returnString;
         }
         case 1:
         {
-            char returnString[20] = "";
+            char *returnString = (char*)malloc(20 * sizeof(char));
 
-            sprintf(returnString, "%d.%d.%d", item->ReturnDate.day, item->ReturnDate.mounth, item->ReturnDate.year);
+            if (item->RentDate.mounth != 12)
+                snprintf(returnString, 20, "%d.%d.%d.", item->RentDate.day, item->RentDate.mounth + 1, item->RentDate.year);
+            else
+                snprintf(returnString, 20, "%d.%d.%d.", item->RentDate.day, 1, item->RentDate.year + 1);
+
+            return returnString;
         }
     }
 }
@@ -421,12 +430,16 @@ void printRentalsItem(void* item, int k, int column_width){
     char* info = getRentalInformation((Rental*)item, k);
     printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", info, 
             fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
+    if (k == 1)
+        free(info);
 }
 
 void printRentalsItemSelected(void* item, int k, int column_width){
     char* info = getRentalInformation((Rental*)item, k);
     printf(ANSI_B_COLOR_RED " %s%s" ANSI_COLOR_RESET "%s", info, 
             fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
+    if (k == 1)
+        free(info);
 }
 
 void mainMenuEnterFunc(void* item){
@@ -537,7 +550,7 @@ void rentalEnterFunc(void* item)
 
 
     printf("%s %d.%d.%d. \n", getTranslation("rnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
-    printf("%s %d.%d.%d.\n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
+    printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
 
     printf("ID: %s\n", r->rentalID);
 
@@ -550,7 +563,7 @@ void rentalEnterFunc(void* item)
     {
         case 0:
         {
-            printf("Returning rental...");
+            printf("removivng rental....");
 
             break;
 
