@@ -55,3 +55,8 @@ int compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero(void* record, char*
     Rental* rental = (Rental*)record;
     return!((!strcmp(rental->UserId, activeUser.userID)) && !(rental->ReturnDate.year != 0));
 }
+
+int compareByRentalBookISBN_AND_ReturnYearEqZero(void* record, char* key){
+    Rental* rental = (Rental*)record;    
+    return !(!(strcmp(rental->BookISBN, key)) && rental->ReturnDate.year == 0);
+}

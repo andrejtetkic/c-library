@@ -13,7 +13,6 @@
 
 int main(){
 
-
     initializeTranslationTable();
 
     current_date.day = 12;
@@ -23,15 +22,6 @@ int main(){
     null_date.mounth = 0;
     null_date.year = 0;
 
-    //landingPage();
-        
-    // createBook(activeUser.language);
-    //pressEnter(); 
-
-
-   
-
-    //landingPage();
 
     activeUser.Privilege = 0;
 

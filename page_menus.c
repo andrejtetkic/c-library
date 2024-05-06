@@ -50,12 +50,18 @@ void currentRentals()
 
     Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
 
-    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(rentals), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
 }
 
 void allTimeRentals()
 {
+    ComparisonPair cp[] = {{compareByRentalUserID, activeUser.userID}};
 
+    int numSelected;
+
+    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
+
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
 }
 
 void myRentals()
@@ -240,8 +246,7 @@ int bookViewInformation(){
     printf("\n\n");
 
     ComparisonPair compare_pairs[] = {
-                { compareByRentalBookISBN, active_book->ISBN}, 
-                { compareByRentalReturnYearEqZero, active_book->ISBN}, 
+                { compareByRentalBookISBN_AND_ReturnYearEqZero, active_book->ISBN},
             };
 
     int num_found = 0;
@@ -276,10 +281,27 @@ void bookView(void* item){
         {
         case 0:
             break;
-        case 1:
+        case 1:{
             
-            rentBook(item);
+            ComparisonPair compare_pairs[] = {
+                { compareByRentalBookISBN_AND_ReturnYearEqZero, active_book->ISBN}, 
+            };
+
+            int num_found = 0;
+            Rental* rentals =  DB_select(RentalT, compare_pairs, sizeof(compare_pairs), &num_found);
+            if (rentals == NULL)
+                num_found = 0; // to make sure it didnt change anything
+
+            free(rentals);
+
+            if(active_book->numberOfCopies > num_found){
+                rentBook(item);
+            } else{
+                printf("%s", getTranslation("out_stock", activeUser.language));
+                pressEnter();
+            }
             break;
+            }
         case 2: {
             clearScreen();
             

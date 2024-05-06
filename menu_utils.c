@@ -269,8 +269,7 @@ char* getBookInformation(Book* item, int k){
         case 4:{
 
             ComparisonPair compare_pairs[] = {
-                { compareByRentalBookISBN, item->ISBN}, 
-                { compareByRentalReturnYearEqZero, item->ISBN}, 
+                { compareByRentalBookISBN_AND_ReturnYearEqZero, item->ISBN},
             };
 
             int num_found = 0;
@@ -295,24 +294,36 @@ char* getBookInformation(Book* item, int k){
 
 char* getRentalInformation(Rental* item, int k)
 {
+    char* returnString = (char*)malloc(50 * sizeof(char));
+
+
     switch(k)
     {
+
         case 0:
         {
-            ComparisonPair cp[] = {compareByBookISBN, item->BookISBN};
-            int num_items;
+            ComparisonPair compare_pairs[] = {
+                { compareByBookISBN, item->BookISBN }, 
+            };
 
-            Book* results = DB_select(BookT, cp, sizeof(cp), &num_items);
+            int num_found;
+            Book* found_books = DB_select(BookT, compare_pairs, sizeof(compare_pairs), &num_found);
 
-            char* returnString = (char*)malloc(50 * sizeof(char));
 
-            snprintf(returnString, 50, "%s", results[0].Title);
- 
-            return returnString;
+            if (found_books != NULL) {
+                snprintf(returnString, 50, "%s", found_books[0].Title);
+                free(found_books);
+                return returnString;
+            } else {
+                snprintf(returnString, 20, "Deleted Book");
+                free(found_books);
+                return returnString;
+            }
+
         }
         case 1:
         {
-            char *returnString = (char*)malloc(20 * sizeof(char));
+            
 
             if (item->RentDate.mounth != 12)
                 snprintf(returnString, 20, "%d.%d.%d.", item->RentDate.day, item->RentDate.mounth + 1, item->RentDate.year);
@@ -427,10 +438,12 @@ void printMainMenuItemSelected(void* item, int k, int column_width){
 }
 
 void printRentalsItem(void* item, int k, int column_width){
+
     char* info = getRentalInformation((Rental*)item, k);
     printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", info, 
             fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
-    if (k == 1)
+
+    if(k == 1)
         free(info);
 }
 
@@ -438,7 +451,8 @@ void printRentalsItemSelected(void* item, int k, int column_width){
     char* info = getRentalInformation((Rental*)item, k);
     printf(ANSI_B_COLOR_RED " %s%s" ANSI_COLOR_RESET "%s", info, 
             fillTimesN(' ', column_width - strlen(info)), fillTimesN(' ', 3));
-    if (k == 1)
+
+    if(k == 1)
         free(info);
 }
 
@@ -535,6 +549,30 @@ void mainMenuEnterFunc(void* item){
         }
     }
 }
+
+void rentalAllEnterFunc(void* item){
+    Rental* r = (Rental*)item;
+
+    ComparisonPair cp[] = {compareByBookISBN, r->BookISBN};
+    int num_items;
+
+    Book* results = DB_select(BookT, cp, sizeof(cp), &num_items);
+
+    char* Title = results[0].Title;
+
+    clearScreen();
+
+    printf("%s\n", Title);
+
+
+    printf("%s %d.%d.%d. \n", getTranslation("rtnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
+    printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
+    
+    printf("ID: %s\n", r->rentalID);
+
+    pressEnter();
+}
+
 void rentalEnterFunc(void* item)
 {
     Rental* r = (Rental*)item;
@@ -551,37 +589,40 @@ void rentalEnterFunc(void* item)
     printf("%s\n", Title);
 
 
-    printf("%s %d.%d.%d. \n", getTranslation("rnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
+    printf("%s %d.%d.%d. \n", getTranslation("rtnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
     printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
-
+    
     printf("ID: %s\n", r->rentalID);
 
     int width = 30;
 
-    char *buttons[] = {"Return Rental", "Exit"};
-    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
+    if(activeUser.Privilege == 1){
+        char *buttons[] = {"Return Rental", "Exit"};
+        int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
 
-    switch(selection)
-    {
-        case 0:
+        switch(selection)
         {
-            printf("removivng rental....");
+            case 0:
+            {
+                returnBook(r->rentalID);
+                mainPaige();
 
-            break;
+                break;
 
-            ///once renting is done this will remove rentals
-        }
-        case 1:
-        {
-            clearScreen();
+            }
+            case 1:
+            {
+                clearScreen();
+                
 
-            myRentals();
+                myRentals();
 
-            break;
-        }
-        default:
-        {
-            break;
+                break;
+            }
+            default:
+            {
+                break;
+            }
         }
     }
 }

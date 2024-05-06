@@ -107,7 +107,7 @@ int initializeTranslationTable() {
     insert("num_pag", "Number Of Pages", "Broj Stranica");
     insert("nw_book", "INSERT NEW BOOK", "UNOS NOVE KNJIGE");
     insert("rnt_err", "ERROR! CANNOT ACSEES RENTALS AS ADMIN", "GRESKA! NE MOZETE PRISTUPITI IZNAJMLJENIM KNJIGAMA KAO ADMIN");
-    insert("rnt_on", "Rented On", "Iznajmljeno");
+    insert("rtnt_on", "Rented On", "Iznajmljeno");
     insert("rnt_untl", "Rented Until", "Iznajmljeno do");
     insert("rnt_msg", "REMINDER: You have rentals due in 4 days or less", "PODSETNIK: Imate iznajmljenja ciji rokovi isticu za 4 dana ili manje");
 
