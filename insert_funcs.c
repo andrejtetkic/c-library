@@ -111,7 +111,7 @@ void insertPublicationYear(Book* k, int language)
     do
     {
         k->PublicationYear = 0;
-        printf("%s: ", getTranslation("publication_year", language));
+        printf("%s: ", getTranslation("pub_yr", language));
         fflush(stdin);
         scanf("%[0-9]", &temp_str);
 
@@ -131,7 +131,7 @@ void insertNumberOfCopies(Book* k, int language)
     do
     {
         k->numberOfCopies = 0;
-        printf("%s: ", getTranslation("num_copies", language));
+        printf("%s: ", getTranslation("num_cop", language));
         fflush(stdin);
         scanf("%[0-9]", &temp_str);
 
@@ -146,7 +146,7 @@ void insertSerialName(Book* k, int language)
 {
     fflush(stdin);
 
-    printf("%s: ", getTranslation("ser_name", language));
+    printf("%s: ", getTranslation("ser_nam", language));
     gets(k->SerialName);
 
     fflush(stdin);
@@ -167,7 +167,7 @@ void insertSerialNumber(Book* k, int language)
     do
     {
         k->SerialNumber = 0;
-        printf("%s: ", getTranslation("serial_number", language));
+        printf("%s: ", getTranslation("ser_num", language));
         fflush(stdin);
         scanf("%[0-9]", &temp_str);
 
@@ -188,7 +188,7 @@ void insertNumberOfPages(Book* k, int language)
     do
     {
         k->NumberOfPages = 0;
-        printf("%s: ", getTranslation("num_pg", language));
+        printf("%s: ", getTranslation("num_pag", language));
         fflush(stdin);
         scanf("%[0-9]", &temp_str);
 

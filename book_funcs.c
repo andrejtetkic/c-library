@@ -10,7 +10,7 @@
 
 void createBook(int language)
 {
-   Book k;
+    Book k;
 
     printf("-------%s-------\n", getTranslation("nw_book", language));
     
@@ -24,10 +24,21 @@ void createBook(int language)
     }  while(checkValidId(k.ISBN) == 0); 
 
     insertBookInfo(&k, language);
+    k.deleted = 0;
 
-    DB_insert(BookT, k.ISBN);
-    DB_insert(BookRST, k.ISBN);
+    DB_insert(BookT, &k);
+    DB_insert(BookRST, &k);
 
+}
+
+void updateBook(Book* k, int langugage)
+{
+    printf("-------%s-------\n", getTranslation("upd_bk", langugage));
+
+    insertBookInfo(k, langugage);
+
+    DB_update(k->ISBN, BookT, k);
+    DB_update(k->ISBN, BookRST, k);
 }
 
 

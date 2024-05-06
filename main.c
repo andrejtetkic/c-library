@@ -14,10 +14,17 @@
 int main(){
 
     initializeTranslationTable();
-    landingPage();
-        
-    // createBook(activeUser.language);
-    pressEnter();
+
+    current_date.day = 12;
+    current_date.mounth = 3;
+    current_date.year = 2023;
+    null_date.day = 0;
+    null_date.mounth = 0;
+    null_date.year = 0;
+
+
+   landingPage();
+
 
     return 0;
 }

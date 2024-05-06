@@ -9,13 +9,14 @@
 #include "db_select_compare.h"
 #include "translation_table.h"
 #include "arg_functions.h"
+#include "book_funcs.h"
 
 Book* active_book;
 
 void logIn();
 void browse();
-
 void landingPage(){
+    
     clearScreen();
 
     int width = 30;
@@ -39,6 +40,131 @@ void landingPage(){
         break;
     }
     
+}
+
+void currentRentals()
+{
+    ComparisonPair cp[] = {{compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero, activeUser.userID}};
+
+    int numSelected;
+
+    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
+
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
+}
+
+void allTimeRentals()
+{
+    ComparisonPair cp[] = {{compareByRentalUserID, activeUser.userID}};
+
+    int numSelected;
+
+    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
+
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
+}
+
+void myRentals()
+{
+    if (activeUser.Privilege == 0)
+    {
+        printf("%s", getTranslation("rnt_err", activeUser.language));
+    }
+
+    else
+    {
+        clearScreen();
+
+        int width = 30;
+
+        char* buttons[] = {"Current Rentals", "All Time Rentals"};
+        int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
+
+        switch (selection)
+        {
+        case 0:  
+        {
+            currentRentals();
+        }
+        case 1:
+        {
+            allTimeRentals();
+        }
+        default:
+            break;
+        }
+    }
+}
+
+void mainPaigeUser()
+{
+    clearScreen();
+
+    char options[5][35] = {"BROWSE", "SEARCH", "MY RENTAL", "EDIT PROFILE", "LOG OUT"};
+
+    browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 5, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
+}
+void mainPaigeAdmin()
+{
+    clearScreen();
+
+    char options[6][35] = {"BROWSE", "SEARCH", "LOG", "EDIT PROFILE", "ADD BOOK", "LOG OUT"};
+
+     browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 6, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
+}
+void mainPaige()
+{
+    if (activeUser.Privilege == 0)
+        mainPaigeAdmin();
+    else if (activeUser.Privilege == 1)
+        mainPaigeUser();
+    else{
+        printf("%s\n", getTranslation("error", activeUser.language));
+        landingPage();
+    }
+
+}
+
+void delete(Book* k)
+{
+    clearScreen();
+
+    int width = 30;
+
+    printf("%s", getTranslation("del_conf", activeUser.language));    
+
+    char *buttons[] = {"YES", "NO"};
+    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
+
+    switch (selection)
+    {
+    case 0:
+    {
+        DB_delete(k->ISBN, BookT);
+        DB_delete(k->ISBN, BookRST);
+
+        clearScreen();
+        printf("%s", getTranslation("del_suc", activeUser.language));
+        pressEnter();
+
+        clearScreen();
+        mainPaige();
+
+        break;
+    }
+    case 1:
+    {
+        clearScreen();
+        browse();
+
+        break;
+
+    }
+    
+    default:
+        break;
+    }    
+
 }
 
 
@@ -83,9 +209,7 @@ void logIn(){
     temp.Privilege = 1;
     activeUser = temp;
 
-    // this will later call mainmenu function
-    //for testing purpuses calling browse
-    browse();
+    mainPaige();
 }
 
 int bookViewInformation(){
@@ -122,8 +246,7 @@ int bookViewInformation(){
     printf("\n\n");
 
     ComparisonPair compare_pairs[] = {
-                { compareByRentalBookISBN, active_book->ISBN}, 
-                { compareByRentalReturnYearEqZero, active_book->ISBN}, 
+                { compareByRentalBookISBN_AND_ReturnYearEqZero, active_book->ISBN},
             };
 
     int num_found = 0;
@@ -158,11 +281,27 @@ void bookView(void* item){
         {
         case 0:
             break;
-        case 1:
-            clearScreen();
-            printf("Renting This");
-            pressEnter();
+        case 1:{
+            
+            ComparisonPair compare_pairs[] = {
+                { compareByRentalBookISBN_AND_ReturnYearEqZero, active_book->ISBN}, 
+            };
+
+            int num_found = 0;
+            Rental* rentals =  DB_select(RentalT, compare_pairs, sizeof(compare_pairs), &num_found);
+            if (rentals == NULL)
+                num_found = 0; // to make sure it didnt change anything
+
+            free(rentals);
+
+            if(active_book->numberOfCopies > num_found){
+                rentBook(item);
+            } else{
+                printf("%s", getTranslation("out_stock", activeUser.language));
+                pressEnter();
+            }
             break;
+            }
         case 2: {
             clearScreen();
             
@@ -243,13 +382,11 @@ void bookView(void* item){
             break;
         case 1:
             clearScreen();
-            printf("Editing");
+            updateBook(active_book, activeUser.language);
             pressEnter();
             break;
         case 2:
-            clearScreen();
-            printf("Deleting");
-            pressEnter();
+            delete(active_book);
             break;
         default:
             break;
@@ -279,16 +416,5 @@ void browse(){
 
 }
 
-void mainPaigeUser()
-{
-
-   /* char *buttons[] = {"Browse", "Search", "MyRental", "Profile"};
-
-    // problem with browse intiate
-
-    browseInitiate(printButton, printButtonSelected, buttons, sizeof(char) * 10, 4, tempMainScreenButtonSellectEnterFunc, 35, 7, wrapperEmpty, wrapperEmpty);
-
-    */
-}
 
 

@@ -4,6 +4,10 @@
 #include <windows.h>
 #include <math.h>
 
+#include "db_system.h"
+#include "utilities.h"
+#include "menu_utils.h"
+
 int getKeyPressed(){
     int ch, n;
     ch = _getch();
@@ -64,4 +68,46 @@ int windowWidth(){
     if(!ret) return 0;
 
     return csbi.dwSize.X;
+}
+
+int compareByRentalID(void* record, char* key){
+    Rental* rental = (Rental*)record;
+    return strcmp(rental->rentalID, key);
+}
+
+
+
+
+void rentBook(Book* book){
+    Rental temp;
+    strcpy(temp.BookISBN, book->ISBN);
+
+    temp.deleted = 0;
+    strcpy(temp.rentalID, randomID(9));
+    temp.RentDate = current_date;
+    temp.ReturnDate = null_date;
+    strcpy(temp.UserId, activeUser.userID);
+
+    DB_insert(RentalT, &temp);
+}
+
+
+int returnBook(char* rentalID){
+
+    ComparisonPair compare_pairs[] = {
+        { compareByRentalID, rentalID }, 
+    };
+
+    int num_found;
+    Rental* rentals = DB_select(RentalT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+    if(rentals == NULL){
+        return 0;
+    }
+
+    rentals[0].ReturnDate = current_date;
+    DB_update(rentalID, RentalT, &rentals[0]);
+
+
+    return 1;
 }
