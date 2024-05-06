@@ -10,6 +10,7 @@
         "db_select_compare.h": "c",
         "string.h": "c",
         "arg_functions.h": "c",
-        "menu_utils.h": "c"
+        "menu_utils.h": "c",
+        "math.h": "c"
     }
 }

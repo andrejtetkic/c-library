@@ -20,6 +20,11 @@ int compareByPassword(void* record, char* key) {
     return strcmp(user->Password, key);
 }
 
+int compareByEmail(void* record, char* key) {
+    User* user = (User*)record;
+    return strcmp(user->Email, key);
+}
+
 int compareSelectEverything(void* record, char* key){
     return 0;
 }
