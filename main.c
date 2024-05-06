@@ -33,7 +33,10 @@ int main(){
 
     //landingPage();
 
-   landingPage();
+    activeUser.Privilege = 0;
+
+    mainPaige();
+
 
 
     return 0;

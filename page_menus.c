@@ -50,7 +50,7 @@ void currentRentals()
 
     Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
 
-    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(rentals), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt(), wrapperEmpty);
+    browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(rentals), numSelected, rentalEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
 }
 
 void allTimeRentals()
@@ -96,7 +96,7 @@ void mainPaigeUser()
 
     char options[5][35] = {"BROWSE", "SEARCH", "MY RENTAL", "EDIT PROFILE", "LOG OUT"};
 
-    browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 5, mainMenuEnterFunc, 40, 5, welcomeArt, wrapperEmpty);
+    browseInitiate(printMainMenuItem, printMainMenuItemSelected, options, 35 * sizeof(char), 5, mainMenuEnterFunc, 40, 5, welcomeArt, returnRentalsMessage);
 }
 void mainPaigeAdmin()
 {

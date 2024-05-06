@@ -7,6 +7,8 @@
 #include "db_system.h"
 #include "utilities.h"
 #include "menu_utils.h"
+#include "translation_table.h"
+#include "inesrt_funcs.h"
 
 int getKeyPressed(){
     int ch, n;
@@ -110,4 +112,21 @@ int returnBook(char* rentalID){
 
 
     return 1;
+}
+
+void editUser()
+{
+    printf("------%s-----\n", getTranslation("edt_pr", activeUser.language));
+
+    insertUserInfo(&activeUser, activeUser.language);
+}
+
+void insertUserInfo(User* u, int language)
+{
+    insertUserUsername(u, language);
+    insertUserPassword(u, language);
+    insertUserFirstName(u, language);
+    insertUserLastName(u, language);
+    insertUserEmail(u, language);
+    insertUserLanguga(u, language);
 }

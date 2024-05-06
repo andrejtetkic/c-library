@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 #include"inesrt_funcs.h"
 #include"db_system.h"
@@ -197,4 +198,126 @@ void insertNumberOfPages(Book* k, int language)
     } while (k->NumberOfPages < 0);
     
     fflush(stdin);
+}
+
+///for inserting user info
+
+void insertUserFirstName(User* u, int language)
+{
+    fflush(stdin);
+
+    do
+    {
+        printf("%s: ", getTranslation("frs_nm", language));
+        gets(u->FirstName);
+    }while(strcmp(u->FirstName, "") == 0);
+
+    fflush(stdin);
+}
+void insertUserLastName(User* u, int langugage)
+{
+    fflush(stdin);
+
+    do
+    {
+        printf("%s: ", getTranslation("lastname", langugage));
+        gets(u->LastName);
+    }while(strcmp(u->LastName, "") == 0);
+
+    fflush(stdin);    
+}
+void insertUserLanguga(User* u, int language)
+{
+    fflush(stdin);
+    int validLanguage = 0;
+
+    do
+    {
+        char tmp[50];
+
+        printf("%s: ", getTranslation("language", language));
+        gets(tmp);
+
+        int i = 0;
+        while(tmp[i] != '\0')
+        {
+            tmp[i] = toupper(tmp[i]);
+            i++;
+        }
+
+        if (strcmp(tmp, "ENGLISH") == 0)
+        {
+            u->language = 0;
+            validLanguage = 1;
+        }
+        else if(strcmp(tmp, "ENGLESKI") == 0)
+        {
+             u->language = 0;
+            validLanguage = 1;
+        }
+        else if (strcmp(tmp, "SERBIAN") == 0)
+        {
+            u->language = 1;
+            validLanguage = 1;
+        }
+        else if (strcmp(tmp, "SRPSKI") == 0)
+        {
+            u->language = 1;
+            validLanguage = 1;
+        }
+    }while(validLanguage != 1);
+    
+    fflush(stdin);
+}
+void insertUserEmail(User* u, int language)
+{
+    fflush(stdin);
+
+    char tmp[50];
+    int validEmail = 0;
+
+    do
+    {
+        printf("%s: ", getTranslation("email", language));
+        gets(tmp);
+
+        int i = 0;
+
+        while(tmp[i] != '\0')
+        {
+            if (tmp[i] == '@')
+                validEmail = 1;
+                i++;
+        }
+
+    }while(validEmail != 1);
+
+    strcpy(u->Email, tmp);
+
+    fflush(stdin);
+}
+void insertUserUsername(User* u, int langugage)
+{
+    fflush(stdin);
+
+    do
+    {
+        printf("%s: ", getTranslation("usr_nm", langugage));
+        gets(u->Username);
+    } while(strcmp(u->Username, "") == 0);
+
+    fflush(stdin);
+    
+}
+void insertUserPassword(User* u, int langugage)
+{
+    ///this function will contain encription when it is finished
+
+    fflush(stdin);
+
+    do
+    {
+        printf("%s: ", getTranslation("psw", langugage));
+        gets(u->Password);
+    }while(strcmp(u->Password, "") == 0);
 }
