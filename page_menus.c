@@ -97,6 +97,17 @@ void allTimeRentals()
     browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
 }
 
+void rentalsLog()
+{
+    ComparisonPair cp[] = {{compareSelectEverything, ""}};
+
+    int numSelected;
+
+    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
+
+    browseInitiate(printLogRentalsItem, printLogRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 5 , adminLogArt, wrapperEmpty);
+}
+
 void myRentals()
 {
     if (activeUser.Privilege == 0)
