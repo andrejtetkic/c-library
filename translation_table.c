@@ -110,6 +110,7 @@ int initializeTranslationTable() {
     insert("rtnt_on", "Rented On", "Iznajmljeno");
     insert("rnt_untl", "Rented Until", "Iznajmljeno do");
     insert("rnt_msg", "REMINDER: You have rentals due in 4 days or less", "PODSETNIK: Imate iznajmljenja ciji rokovi isticu za 4 dana ili manje");
+    insert("rnt_ms1", "WARNING: You have overdue rentals", "UPOZORENJE: Imate iznajmljivanja ciji je rok istekao");
 
     insert("edt_pr", "EDIT PROFILE", "IZMENITE PROFIL");
     insert("frs_nm", "First Name", "Prvo Ime");
@@ -117,6 +118,11 @@ int initializeTranslationTable() {
     insert("email", "Email", "Email");
     insert("usr_nm", "Username", "Korisnicko Ime");
     insert("psw", "Password", "Lozinka");
+    insert("inval_isbn", "Book with this ISBN already exists, do you want to increase the number of copies in stock?(Y\\N)",
+    "Knjiga sa ovim ISBN vec postoji, da li zelite da povecate broj dostupnih primeraka?(D\\N)");
+    insert("hwmncp", "How many copies do you want to add", "Koliko primeraka zelite da dodate");
+    insert("cnt_dl", "Cannot delete this book because it is currently rented by someone",
+    "Ne mozete obrisati ovu knjigu jer je neko ternutno iznajmljuje");
 
     
 

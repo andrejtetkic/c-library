@@ -1,12 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 #include"db_system.h"
 #include"book_funcs.h"
 #include"translation_table.h"
 #include"db_select_compare.h"
 #include"inesrt_funcs.h"
+#include"page_menus.h"
 
 void createBook(int language)
 {
@@ -14,20 +16,50 @@ void createBook(int language)
 
     printf("-------%s-------\n", getTranslation("nw_book", language));
     
-    do{
+    
 
-        fflush(stdin);
+    fflush(stdin);
 
-        printf("ISBN: ");
-        gets(k.ISBN);
+    printf("ISBN: ");
+    gets(k.ISBN);
 
-    }  while(checkValidId(k.ISBN) == 0); 
+    if (checkValidId(k.ISBN) == 1)
+    {
+         insertBookInfo(&k, language);
+        k.deleted = 0;
 
-    insertBookInfo(&k, language);
-    k.deleted = 0;
+        DB_insert(BookT, &k);
+        DB_insert(BookRST, &k);
+    }
+    else
+    {
+        printf("%s: ", getTranslation("inval_isbn", activeUser.language));
 
-    DB_insert(BookT, &k);
-    DB_insert(BookRST, &k);
+        char op;
+
+        scanf("%c", &op);
+
+        if (toupper(op) == 'Y' || toupper(op) == 'D')
+        {
+            int num_copies, n;
+
+            printf("%s : ", getTranslation("hwmncp", activeUser.language));
+            scanf("%d", &num_copies);
+
+            ComparisonPair cp[] = {{compareByBookISBN, k.ISBN}};
+
+             Book* b = (Book*)DB_select(BookT, cp, sizeof(cp), &n);
+             b->numberOfCopies+=num_copies;
+
+             mainPaige();
+        }
+        else
+        {
+            mainPaige();
+        }
+    }
+
+    fflush(stdin);
 
 }
 
