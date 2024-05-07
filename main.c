@@ -10,7 +10,7 @@
 #include "db_select_compare.h" 
 #include "book_funcs.h"
 
-
+// admin user: admin; pass: 123456789
 int main(){
 
     initializeTranslationTable();
