@@ -9,6 +9,7 @@ typedef int (*PrintWrapper)(); // returns number of lines printed
 
 int inlineOneButtonSelect(int button_width, char *buttons[], int numButtons, int left_spacing, int button_spacing, int is_3_line, int top_offset, PrintWrapper preWrapper, PrintWrapper postWrapper);
 void fillInForm(char* buf);
+void SignUpArt();
 void logInArt();
 int welcomeArt();
 char* getBookInformation(Book* item, int k);

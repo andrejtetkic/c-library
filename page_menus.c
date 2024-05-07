@@ -214,104 +214,81 @@ void delete(Book* k)
     char username[200] = {0};
     int language;
     do{
-    clearScreen();
-    SignUpArt();
-    
-    int firstName_len = 34;
-    printf("\t\t\t| " ANSI_COLOR_GRAY "First name%s" ANSI_COLOR_RESET "|%s", 
-    fillTimesN(' ', firstName_len - 11), fillTimesN('\b', firstName_len) );
-    
-    
-    fillInForm(firstName);
-    
-
-    // Enter last name
-    clearScreen();
-    SignUpArt();
-    
-    int lastName_len = 34;
-    printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
-    printf("\t\t\t| " ANSI_COLOR_GRAY "Last name%s" ANSI_COLOR_RESET "|%s", 
-        fillTimesN(' ', lastName_len - 10), fillTimesN('\b', lastName_len) );
-    
-    
-    fillInForm(lastName);
-
-    // Enter email
-    clearScreen();
-    SignUpArt();
-    
-    int email_len = 34;
-    printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
-    printf("\t\t\t| %s%s|\n", lastName,
-        fillTimesN(' ', lastName_len - strlen(lastName) - 1));
-    printf("\t\t\t| " ANSI_COLOR_GRAY "Email%s" ANSI_COLOR_RESET "|%s", 
-        fillTimesN(' ', email_len - 7), fillTimesN('\b', email_len) );
-    fillInForm(email);
-
-    //Enter language
-    
-    int width = 10;
-    printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
-    printf("\t\t\t| %s%s|\n", lastName,
-        fillTimesN(' ', lastName_len - strlen(lastName) - 1));
-    printf("\t\t\t| %s%s|\n", email,
-        fillTimesN(' ', email_len - strlen(email) - 1));
-    char *buttons[] = {"English", "Srpski"};
-    int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
-    language = selection;
-    // Enter Username
-
-    clearScreen();
-    SignUpArt();
-    
-    int username_len = 34;
-    printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
-    printf("\t\t\t| %s%s|\n", lastName,
-        fillTimesN(' ', lastName_len - strlen(lastName) - 1));
-    printf("\t\t\t| %s%s|\n", email,
-        fillTimesN(' ', email_len - strlen(email) - 1));
-    printf("\t\t\t| %s%s|\n", buttons[language],
-        fillTimesN(' ', firstName_len - strlen(buttons[language]) - 1));
-    printf("\t\t\t| " ANSI_COLOR_GRAY "Username%s" ANSI_COLOR_RESET "|%s", 
-        fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
-    
-    fillInForm(username);
-
-    // Enter Password
-
-    clearScreen();
-    SignUpArt();
-
-    printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
-    printf("\t\t\t| %s%s|\n", lastName,
-        fillTimesN(' ', lastName_len - strlen(lastName) - 1));
-    printf("\t\t\t| %s%s|\n", email,
-        fillTimesN(' ', email_len - strlen(email) - 1));
-    printf("\t\t\t| %s%s|\n", buttons[language],
-        fillTimesN(' ', firstName_len - strlen(buttons[language]) - 1));
-    printf("\t\t\t| %s%s|\n", username,
-        fillTimesN(' ', username_len - strlen(username) - 1));
-    printf("\t\t\t| " ANSI_COLOR_GRAY "Password%s" ANSI_COLOR_RESET "|%s",
-        fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
-
-    fillInForm(password);
-    
-
-    // Check if passwords match
-    
-
-    do{
         clearScreen();
         SignUpArt();
         
+        int firstName_len = 34;
+        printf("\t\t\t| " ANSI_COLOR_GRAY "First name%s" ANSI_COLOR_RESET "|%s", 
+        fillTimesN(' ', firstName_len - 11), fillTimesN('\b', firstName_len) );
+        
+        
+        fillInForm(firstName);
+        
+
+        // Enter last name
+        clearScreen();
+        SignUpArt();
+        
+        int lastName_len = 34;
         printf("\t\t\t| %s%s|\n", firstName,
-        fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+        printf("\t\t\t| " ANSI_COLOR_GRAY "Last name%s" ANSI_COLOR_RESET "|%s", 
+            fillTimesN(' ', lastName_len - 10), fillTimesN('\b', lastName_len) );
+        
+        
+        fillInForm(lastName);
+
+        // Enter email
+        clearScreen();
+        SignUpArt();
+        
+        int email_len = 34;
+        printf("\t\t\t| %s%s|\n", firstName,
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+        printf("\t\t\t| %s%s|\n", lastName,
+            fillTimesN(' ', lastName_len - strlen(lastName) - 1));
+        printf("\t\t\t| " ANSI_COLOR_GRAY "Email%s" ANSI_COLOR_RESET "|%s", 
+            fillTimesN(' ', email_len - 6), fillTimesN('\b', email_len) );
+        fillInForm(email);
+
+        //Enter language
+        
+        int width = 10;
+        printf("\t\t\t| %s%s|\n", firstName,
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+        printf("\t\t\t| %s%s|\n", lastName,
+            fillTimesN(' ', lastName_len - strlen(lastName) - 1));
+        printf("\t\t\t| %s%s|\n", email,
+            fillTimesN(' ', email_len - strlen(email) - 1));
+        char *buttons[] = {"English", "Srpski"};
+        int selection = inlineOneButtonSelect(width, buttons, 2, (windowWidth()-2*width)/2, 3, 1, (windowHeight()-3)/2, wrapperEmpty, wrapperEmpty);
+        language = selection;
+        // Enter Username
+
+        clearScreen();
+        SignUpArt();
+        
+        int username_len = 34;
+        printf("\t\t\t| %s%s|\n", firstName,
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+        printf("\t\t\t| %s%s|\n", lastName,
+            fillTimesN(' ', lastName_len - strlen(lastName) - 1));
+        printf("\t\t\t| %s%s|\n", email,
+            fillTimesN(' ', email_len - strlen(email) - 1));
+        printf("\t\t\t| %s%s|\n", buttons[language],
+            fillTimesN(' ', firstName_len - strlen(buttons[language]) - 1));
+        printf("\t\t\t| " ANSI_COLOR_GRAY "Username%s" ANSI_COLOR_RESET "|%s", 
+            fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
+        
+        fillInForm(username);
+
+        // Enter Password
+
+        clearScreen();
+        SignUpArt();
+
+        printf("\t\t\t| %s%s|\n", firstName,
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
         printf("\t\t\t| %s%s|\n", lastName,
             fillTimesN(' ', lastName_len - strlen(lastName) - 1));
         printf("\t\t\t| %s%s|\n", email,
@@ -320,27 +297,50 @@ void delete(Book* k)
             fillTimesN(' ', firstName_len - strlen(buttons[language]) - 1));
         printf("\t\t\t| %s%s|\n", username,
             fillTimesN(' ', username_len - strlen(username) - 1));
-        printf("\t\t\t| %s%s|\n", password,
-            fillTimesN(' ', username_len - strlen(password) - 1));
-        printf("\t\t\t| " ANSI_COLOR_GRAY "Password again%s" ANSI_COLOR_RESET "|%s",
-            fillTimesN(' ', username_len - 15), fillTimesN('\b', username_len));
-        fillInForm(password2);
-    }while (strcmp(password, password2) != 0);
+        printf("\t\t\t| " ANSI_COLOR_GRAY "Password%s" ANSI_COLOR_RESET "|%s",
+            fillTimesN(' ', username_len - 9), fillTimesN('\b', username_len) );
 
-    memset(password2, 0, strlen(password2));
-    hash_password(password, password);
-    
-    ComparisonPair compare_pairs[] = {
-         { compareByUsername, username }, 
-         /* { compareBySomeField, "some_value" } */
-     };
+        fillInForm(password);
+        
 
-     
-     User* found_users = DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
-     if (found_users != NULL) {
-             printf("Username already taken\n");
-         free(found_users);
-     }
+        // Check if passwords match
+        
+
+        do{
+            clearScreen();
+            SignUpArt();
+            memset(password2, 0, strlen(password2));
+            printf("\t\t\t| %s%s|\n", firstName,
+            fillTimesN(' ', firstName_len - strlen(firstName) - 1));
+            printf("\t\t\t| %s%s|\n", lastName,
+                fillTimesN(' ', lastName_len - strlen(lastName) - 1));
+            printf("\t\t\t| %s%s|\n", email,
+                fillTimesN(' ', email_len - strlen(email) - 1));
+            printf("\t\t\t| %s%s|\n", buttons[language],
+                fillTimesN(' ', firstName_len - strlen(buttons[language]) - 1));
+            printf("\t\t\t| %s%s|\n", username,
+                fillTimesN(' ', username_len - strlen(username) - 1));
+            printf("\t\t\t| %s%s|\n", password,
+                fillTimesN(' ', username_len - strlen(password) - 1));
+            printf("\t\t\t| " ANSI_COLOR_GRAY "Password again%s" ANSI_COLOR_RESET "|%s",
+                fillTimesN(' ', username_len - 15), fillTimesN('\b', username_len));
+            fillInForm(password2);
+        }while (strcmp(password, password2) != 0);
+
+        memset(password2, 0, strlen(password2));
+        hash_password(password, password);
+        
+        ComparisonPair compare_pairs[] = {
+            { compareByUsername, username }, 
+            /* { compareBySomeField, "some_value" } */
+        };
+
+        
+        User* found_users = DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
+        if (found_users != NULL) {
+            printf("Username already taken\n");
+            free(found_users);
+        }
     }while(num_found > 0);
     User signedUser;
     strcpy(signedUser.Email, email);
