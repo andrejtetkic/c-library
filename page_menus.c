@@ -388,23 +388,26 @@ void logIn(){
 
     // set active user
 
+    hash_password(password, password);
+
     ComparisonPair compare_pairs[] = {
          { compareByUsername, username }, 
-         { compareByPassword, password },
          /* { compareBySomeField, "some_value" } */
      };
 
-     int num_found;
+      int num_found;
      User* found_users = DB_select(UserT, compare_pairs, sizeof(compare_pairs), &num_found);
      if (found_users != NULL) {
          activeUser = found_users[0];
          free(found_users);
      } else {
-         printf("No matching records found.\n");
+         printf("Wrong Username or Password.\n");
          pressEnter();
-         logIn();
+         landingPage();
          return;
-     }
+     } 
+
+     //until loging in is done
 
     mainPaige();
 }
