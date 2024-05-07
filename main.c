@@ -23,7 +23,7 @@ int main(){
     null_date.year = 0;
 
 
-    activeUser.Privilege = 1;
+    activeUser.Privilege = 0;
 
     landingPage();
 
