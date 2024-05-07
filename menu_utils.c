@@ -598,7 +598,12 @@ void rentalEnterFunc(void* item)
 
 
     printf("%s %d.%d.%d. \n", getTranslation("rtnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
-    printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
+    
+    if (r->RentDate.mounth != 12)
+        printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->RentDate.day, r->RentDate.mounth + 1, r->RentDate.year);
+    else
+        printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->RentDate.day, r->RentDate.mounth , r->RentDate.year + 1);
+
     
     printf("ID: %s\n", r->rentalID);
 
@@ -646,14 +651,25 @@ int returnRentalsMessage()
         int numDays = (rentals[i].RentDate.year * 365 + (rentals[i].RentDate.mounth + 1) * 30 + rentals[i].RentDate.day)
         - (current_date.year * 365 + current_date.mounth * 30 + current_date.day);
 
-        if(numDays < 4)
+        if(numDays < 4 && numDays >= 0) 
             showMessage = 1;
+        else if (numDays < 0)
+            showMessage = 2;
     }
 
     if (showMessage == 1)
     {
-        printf(ANSI_COLOR_YELLOW"%s"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
+        printf(ANSI_COLOR_YELLOW"\n%s\n"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
+        return 3;
     }
+     if (showMessage == 2)
+    {
+        printf(ANSI_COLOR_RED"\n%s\n"ANSI_COLOR_RESET, getTranslation("rnt_ms1", activeUser.language));
+        return 3;
+    }
+
+    return 0;
+
 }
 
 

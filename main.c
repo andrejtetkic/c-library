@@ -15,19 +15,17 @@ int main(){
 
     initializeTranslationTable();
 
-    current_date.day = 12;
-    current_date.mounth = 3;
+    current_date.day = 14;
+    current_date.mounth = 4;
     current_date.year = 2023;
     null_date.day = 0;
     null_date.mounth = 0;
     null_date.year = 0;
 
 
-    activeUser.Privilege = 0;
+    activeUser.Privilege = 1;
 
     landingPage();
-
-
 
     return 0;
 }
