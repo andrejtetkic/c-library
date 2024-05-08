@@ -197,6 +197,17 @@ int adminLogArt(){
 
 }
 
+void searchArt(){
+    
+    printf("\t\t\t\t\t" ANSI_COLOR_CYAN "  _________                           .__     \n");
+    printf("\t\t\t\t\t /   _____/ ____ _____ _______   ____ |  |__  \n");
+    printf("\t\t\t\t\t \\_____  \\_/ __ \\\\__  \\\\_  __ \\_/ ___\\|  |  \\ \n");
+    printf("\t\t\t\t\t /        \\  ___/ / __ \\|  | \\/\\  \\___|   Y  \\\n");
+    printf("\t\t\t\t\t/_______  /\\___  >____  /__|    \\___  >___|  /\n");
+    printf("\t\t\t\t\t        \\/     \\/     \\/            \\/     \\/ " ANSI_COLOR_RESET "\n\n\n");
+
+}
+
 
 char* getReviewInformation(Review* item, int k){
     switch (k)
@@ -573,13 +584,11 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "SEARCH") == 0)
             {
-                printf("searching...");
-                // will call for search func when it is completed               
+                search();
             }
             else if(strcmp(op, "LOG") == 0)
             {
                rentalsLog();
-                // will call for log func when it is completed
             }
             else if (strcmp(op, "EDIT PROFILE") == 0)
             {
@@ -616,8 +625,7 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "SEARCH") == 0)
             {
-                printf("searching....");
-                //this will call for search fuc when it is completed
+                search();
             }
             else if(strcmp(op, "MY RENTAL") == 0)
             {               
@@ -761,5 +769,3 @@ int returnRentalsMessage()
     return 0;
 
 }
-
-

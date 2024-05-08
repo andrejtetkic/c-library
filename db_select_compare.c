@@ -1,6 +1,7 @@
 #include <string.h>
-
+#include <stdlib.h>
 #include "db_system.h"
+#include "utilities.h"
 
 // Return 0 if a match, 1 if not
 
@@ -69,4 +70,56 @@ int compareByRentalUserIdEqActiveUserId_AND_ReturnYearEqZero(void* record, char*
 int compareByRentalBookISBN_AND_ReturnYearEqZero(void* record, char* key){
     Rental* rental = (Rental*)record;    
     return !(!(strcmp(rental->BookISBN, key)) && rental->ReturnDate.year == 0);
+}
+
+int compareByBookTitle(void* record, char* key){
+    Book* book = (Book*)record;
+
+    char* record_lower = toLowercaseCopy(book->Title);
+    char* key_lower = toLowercaseCopy(key);
+    
+    if(strstr(record_lower, key_lower) != NULL){
+        free(record_lower);
+        free(key_lower);
+        return 0;
+    }
+    free(record_lower);
+    free(key_lower);
+    return 1;
+}
+
+int compareByBookAuthor(void* record, char* key){
+    Book* book = (Book*)record;
+    
+    char* record_lower = toLowercaseCopy(book->Author);
+    char* key_lower = toLowercaseCopy(key);
+    
+    if(strstr(record_lower, key_lower) != NULL){
+        free(record_lower);
+        free(key_lower);
+        return 0;
+    }
+    free(record_lower);
+    free(key_lower);
+    return 1;
+}
+
+int compareByBookTag(void* record, char* key){
+    Book* book = (Book*)record;
+    char* key_lower = toLowercaseCopy(key);
+    
+    for(int i = 0; i < 10; i++){    
+        char* record_lower = toLowercaseCopy(book->Tags[i]);
+        if(strstr(record_lower, key_lower) != NULL){
+            free(record_lower);
+            free(key_lower);
+            return 0;
+        }
+        free(record_lower);
+
+        
+    }
+    
+    free(key_lower);
+    return 1;
 }

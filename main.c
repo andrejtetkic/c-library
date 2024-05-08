@@ -10,7 +10,7 @@
 #include "db_select_compare.h" 
 #include "book_funcs.h"
 
-
+// admin user: admin; pass: 123456789
 int main(){
 
     initializeTranslationTable();
@@ -18,12 +18,11 @@ int main(){
     current_date.day = 14;
     current_date.mounth = 4;
     current_date.year = 2023;
+    
     null_date.day = 0;
     null_date.mounth = 0;
     null_date.year = 0;
 
-
-    activeUser.Privilege = 0;
 
     landingPage();
 

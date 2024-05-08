@@ -55,3 +55,15 @@ void tempMainScreenButtonSellectEnterFunc(void* item){
 int wrapperEmpty(){
     return 0;
 }
+
+int preWrapperOrderBy(){
+    char* text = getTranslation("ordby", activeUser.language);
+    printf("%s%s%s\n\n", fillTimesN(' ', (windowWidth() - strlen(text))/2), text, fillTimesN(' ', (windowWidth() - strlen(text))/2));
+    return 2;
+}
+
+int preWrapperOrder(){
+    char* text = getTranslation("ord", activeUser.language);
+    printf("%s%s%s\n\n", fillTimesN(' ', (windowWidth() - strlen(text))/2), text, fillTimesN(' ', (windowWidth() - strlen(text))/2));
+    return 2;
+}

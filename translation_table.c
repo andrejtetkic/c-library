@@ -69,6 +69,10 @@ int initializeTranslationTable() {
     insert("lastname", "Last Name", "Prezime");
     insert("username", "Username", "Korisnicko Ime");
     insert("no_results", "No Results Found", "Nista nije pronadjeno :(");
+    insert("login", "Log In", "Uloguj se");
+    insert("password", "Password", "Lozinka");
+    insert("signup", "Sign Up", "Registruj se");
+    insert("search", "Search", "Pretraga");
 
     insert("in_stock", "In Stock", "Na Stanju");
     insert("out_stock", "Out of Stock", "Nije na Stanju");
@@ -82,10 +86,10 @@ int initializeTranslationTable() {
     insert("published", "Published by", "Objavio");
     insert("in", "in", "");
     insert("back_br", "Back to Browsing", "Nazad na Pregledanje");
-    insert("rentT", "Rent This", "Iznajmi");
+    insert("rnt", "Rent This", "Iznajmi");
     insert("rev", "Reviews", "Recenzije");
     insert("lev_rev", "Leave a Review", "Postavite Recenziju");
-    insert("edit", "Edit", "Izmeni");
+    insert("edit___", "Edit", "Izmeni");
     insert("delete", "Delete", "Izbrisi");
     insert("review", "Review", "Oceni");
     insert("rating", "Rating", "Ocena");
@@ -123,8 +127,10 @@ int initializeTranslationTable() {
     insert("hwmncp", "How many copies do you want to add", "Koliko primeraka zelite da dodate");
     insert("cnt_dl", "Cannot delete this book because it is currently rented by someone",
     "Ne mozete obrisati ovu knjigu jer je neko ternutno iznajmljuje");
-
-    
+    insert("acc", "Ascending", "Rastuci");
+    insert("dec", "Descending", "Opadajuci");
+    insert("ordby", "Order By", "Poredjaj Po");
+    insert("ord", "Order", "Redosled");
 
 
 

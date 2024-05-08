@@ -88,6 +88,7 @@ void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_
                         // Copy the found record to the array
                         memcpy((Book*)found_records + found_count, &tempBook, sizeof(Book));
                         found_count++;
+                        break;
                         
                     }
                 }
@@ -112,6 +113,7 @@ void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_
                         memcpy((BookRS*)found_records + found_count, &tempBookRS, sizeof(BookRS));
                         found_count++;
                         
+                        break;
                     }
                 }
             }
@@ -135,6 +137,7 @@ void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_
                         memcpy((Review*)found_records + found_count, &tempReview, sizeof(Review));
                         found_count++;
                         
+                        break;
                     }
                 }
             }
@@ -158,6 +161,7 @@ void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_
                         memcpy((Rental*)found_records + found_count, &tempRental, sizeof(Rental));
                         found_count++;
                         
+                        break;
                     }
                 }
             }
@@ -181,6 +185,7 @@ void* DB_select(enum Tables table, ComparisonPair* compare_pairs, int comp_pair_
                         memcpy((User*)found_records + found_count, &tempUser, sizeof(User));
                         found_count++;
                         
+                        break;
                     }
                 }
             }
