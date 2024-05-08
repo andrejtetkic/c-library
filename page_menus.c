@@ -97,6 +97,17 @@ void allTimeRentals()
     browseInitiate(printRentalsItem, printRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 4 , myRentalsArt, wrapperEmpty);
 }
 
+void rentalsLog()
+{
+    ComparisonPair cp[] = {{compareSelectEverything, ""}};
+
+    int numSelected;
+
+    Rental *rentals = DB_select(RentalT, cp, sizeof(cp), &numSelected);
+
+    browseInitiate(printLogRentalsItem, printLogRentalsItemSelected, rentals, sizeof(Rental), numSelected, rentalAllEnterFunc, 40, 5 , adminLogArt, wrapperEmpty);
+}
+
 void myRentals()
 {
     if (activeUser.Privilege == 0)
@@ -173,15 +184,38 @@ void delete(Book* k)
     {
     case 0:
     {
-        DB_delete(k->ISBN, BookT);
-        DB_delete(k->ISBN, BookRST);
+        ComparisonPair cp[] = {{compareByRentalBookISBN, k->ISBN}};
 
-        clearScreen();
-        printf("%s", getTranslation("del_suc", activeUser.language));
-        pressEnter();
+        int num_found, num_active = 0;
 
-        clearScreen();
-        mainPaige();
+        Rental* rentals = DB_select(RentalT, cp, sizeof(cp), &num_found);
+        for (int i = 0; i < num_found; i++)
+        {
+            if (rentals[i].ReturnDate.year == 0)
+                num_active++;
+        }
+
+        if (num_active == 0)
+        {
+            DB_delete(k->ISBN, BookT);
+            DB_delete(k->ISBN, BookRST);
+
+            clearScreen();
+            printf("%s", getTranslation("del_suc", activeUser.language));
+            pressEnter();
+ 
+            clearScreen();
+            mainPaige();
+        }
+        else
+        {
+            clearScreen();
+
+            printf("%s", getTranslation("cnt_dl", activeUser.language));
+
+            pressEnter();
+            mainPaige();
+        }
 
         break;
     }
@@ -343,11 +377,13 @@ void delete(Book* k)
         }
     }while(num_found > 0);
     User signedUser;
+
     strcpy(signedUser.Email, email);
     strcpy(signedUser.FirstName, firstName);
     strcpy(signedUser.LastName, lastName);
     strcpy(signedUser.Username, username);
     strcpy(signedUser.Password, password);
+
     signedUser.language = language;
     signedUser.Privilege = 1;
     DB_insert(UserT, &signedUser);
@@ -406,8 +442,6 @@ void logIn(){
          landingPage();
          return;
      } 
-
-     //until loging in is done
 
     mainPaige();
 }

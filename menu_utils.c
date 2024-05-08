@@ -184,6 +184,19 @@ int myRentalsArt()
     return 14;
 }
 
+int adminLogArt(){
+    
+    printf("\t\t\t\t\t    ___       __          _       __               \n");
+    printf("\t\t\t\t\t   /   | ____/ /___ ___  (_)___  / /   ____  ____ _\n");
+    printf("\t\t\t\t\t  / /| |/ __  / __ `__ \\/ / __ \\/ /   / __ \\/ __ `/\n");
+    printf("\t\t\t\t\t / ___ / /_/ / / / / / / / / / / /___/ /_/ / /_/ / \n");
+    printf("\t\t\t\t\t/_/  |_\\__,_/_/ /_/ /_/_/_/ /_/_____/\\____/\\__, /  \n");
+    printf("\t\t\t\t\t                                          /____/   \n");
+    printf("\n\n");
+    return 8;
+
+}
+
 void searchArt(){
     
     printf("\t\t\t\t\t" ANSI_COLOR_CYAN "  _________                           .__     \n");
@@ -354,7 +367,61 @@ char* getRentalInformation(Rental* item, int k)
     }
 }
 
+char* getLogRentalInformation(Rental* item, int k)
+{
+    char* returnString = (char*)malloc(50 * sizeof(char));
 
+
+    switch(k)
+    {
+
+        case 0:
+        {
+            ComparisonPair compare_pairs[] = {
+                { compareByBookISBN, item->BookISBN }, 
+            };
+
+            int num_found;
+            Book* found_books = DB_select(BookT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+
+            if (found_books != NULL) {
+                snprintf(returnString, 50, "%s", found_books[0].Title);
+                free(found_books);
+                return returnString;
+            } else {
+                snprintf(returnString, 20, "Deleted Book");
+                free(found_books);
+                return returnString;
+            }
+
+        }
+
+        case 1:
+        {
+            if(item->ReturnDate.year == 0){
+                return ANSI_COLOR_RED "Not Returned, Due:";
+            } 
+            return ANSI_COLOR_GREEN "Returned at:";
+        }
+
+        case 2:
+        {
+            
+            if(item->ReturnDate.year == 0){
+                if (item->RentDate.mounth != 12)
+                    snprintf(returnString, 20, "%d.%d.%d.", item->RentDate.day, item->RentDate.mounth + 1, item->RentDate.year);
+                else
+                    snprintf(returnString, 20, "%d.%d.%d.", item->RentDate.day, 1, item->RentDate.year + 1);
+            } else {
+                snprintf(returnString, 20,  "%d.%d.%d.", item->ReturnDate.day, item->ReturnDate.mounth, item->ReturnDate.year);
+            }
+
+            return returnString;
+
+        }
+    }
+}
 
 void BrowseDisplay(int selected_index, ObjectDisplayTemplate printOne, ObjectDisplayTemplate printOneSelected, void* items, int size_of_item, int num_items, int column_width, int row_height, int wrappers_size){
 
@@ -475,6 +542,31 @@ void printRentalsItemSelected(void* item, int k, int column_width){
         free(info);
 }
 
+
+void printLogRentalsItem(void* item, int k, int column_width){
+    int add_offset = 0;
+    if(k==1) add_offset = strlen(ANSI_COLOR_BLUE);
+
+    char* info = getLogRentalInformation((Rental*)item, k);
+    printf(ANSI_B_COLOR_GRAY " %s%s" ANSI_COLOR_RESET "%s", info, 
+            fillTimesN(' ', column_width - strlen(info) + add_offset), fillTimesN(' ', 3));
+
+    if(k != 1)
+        free(info);
+}
+
+void printLogRentalsItemSelected(void* item, int k, int column_width){
+    int add_offset = 0;
+    if(k==1) add_offset = strlen(ANSI_COLOR_BLUE);
+
+    char* info = getLogRentalInformation((Rental*)item, k);
+    printf(ANSI_B_COLOR_CYAN " %s%s" ANSI_COLOR_RESET "%s", info, 
+            fillTimesN(' ', column_width - strlen(info) + add_offset), fillTimesN(' ', 3));
+
+    if(k != 1)
+        free(info);
+}
+
 void mainMenuEnterFunc(void* item){
     
     char* op = (char*)item;
@@ -497,7 +589,7 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "LOG") == 0)
             {
-               printf("loging...");
+               rentalsLog();
                 // will call for log func when it is completed
             }
             else if (strcmp(op, "EDIT PROFILE") == 0)
@@ -539,9 +631,7 @@ void mainMenuEnterFunc(void* item){
                 //this will call for search fuc when it is completed
             }
             else if(strcmp(op, "MY RENTAL") == 0)
-            {
-                printf("my rentals....");
-                
+            {               
                 myRentals();
             }
             else if(strcmp(op, "EDIT PROFILE") == 0)
@@ -609,7 +699,12 @@ void rentalEnterFunc(void* item)
 
 
     printf("%s %d.%d.%d. \n", getTranslation("rtnt_on", activeUser.language), r->RentDate.day, r->RentDate.mounth, r->RentDate.year);
-    printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->ReturnDate.day, r->ReturnDate.mounth, r->ReturnDate.year);
+    
+    if (r->RentDate.mounth != 12)
+        printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->RentDate.day, r->RentDate.mounth + 1, r->RentDate.year);
+    else
+        printf("%s %d.%d.%d. \n", getTranslation("rnt_untl", activeUser.language), r->RentDate.day, r->RentDate.mounth , r->RentDate.year + 1);
+
     
     printf("ID: %s\n", r->rentalID);
 
@@ -657,12 +752,23 @@ int returnRentalsMessage()
         int numDays = (rentals[i].RentDate.year * 365 + (rentals[i].RentDate.mounth + 1) * 30 + rentals[i].RentDate.day)
         - (current_date.year * 365 + current_date.mounth * 30 + current_date.day);
 
-        if(numDays < 4)
+        if(numDays < 4 && numDays >= 0) 
             showMessage = 1;
+        else if (numDays < 0)
+            showMessage = 2;
     }
 
     if (showMessage == 1)
     {
-        printf(ANSI_COLOR_YELLOW"%s"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
+        printf(ANSI_COLOR_YELLOW"\n%s\n"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
+        return 3;
     }
+     if (showMessage == 2)
+    {
+        printf(ANSI_COLOR_RED"\n%s\n"ANSI_COLOR_RESET, getTranslation("rnt_ms1", activeUser.language));
+        return 3;
+    }
+
+    return 0;
+
 }
