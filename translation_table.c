@@ -86,7 +86,7 @@ int initializeTranslationTable() {
     insert("published", "Published by", "Objavio");
     insert("in", "in", "");
     insert("back_br", "Back to Browsing", "Nazad na Pregledanje");
-    insert("rentT", "Rent This", "Iznajmi");
+    insert("rntT", "Rent This", "Iznajmi");
     insert("rev", "Reviews", "Recenzije");
     insert("lev_rev", "Leave a Review", "Postavite Recenziju");
     insert("edit", "Edit", "Izmeni");

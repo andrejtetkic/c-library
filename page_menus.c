@@ -470,7 +470,7 @@ void bookView(void* item){
     int width = 24;
     int selection;
 
-    char *buttonsUser[] = {getTranslation("back_br", activeUser.language), getTranslation("rentT", activeUser.language), getTranslation("rev", activeUser.language), getTranslation("lev_rev", activeUser.language)};
+    char *buttonsUser[] = {getTranslation("back_br", activeUser.language), getTranslation("rntT", activeUser.language), getTranslation("rev", activeUser.language), getTranslation("lev_rev", activeUser.language)};
     char *buttonsAdmin[] = {getTranslation("back_br", activeUser.language), getTranslation("edit", activeUser.language), getTranslation("delete", activeUser.language)};
 
 
@@ -616,5 +616,45 @@ void browse(){
 
 }
 
+
+void search(){
+    clearScreen();
+    searchArt();
+
+    fflush(stdin);
+
+    char searchc[200] = {0};
+    printf("\t\t\t\t\t    | " ANSI_COLOR_GRAY "Search%s" ANSI_COLOR_RESET "|%s", fillTimesN(' ', 34 - 6), fillTimesN('\b', 35));
+    fillInForm(searchc);
+
+    clearScreen();
+
+    int width = 20;
+    char *buttons[] = {"title", "author", "rating", "number of pages", "year"};
+    order_by_selection = inlineOneButtonSelect(width, buttons, 5, (windowWidth()-5*width - 5*3)/2, 3, 1, (windowHeight()-3)/2, preWrapperOrderBy, wrapperEmpty);
+    
+    int order_width = 50;
+    char *order_buttons[] = {"ascending ", "descending"};
+    order_selection = inlineOneButtonSelect(order_width, order_buttons, 2, (windowWidth()-2*order_width - 2*3)/2, 3, 1, (windowHeight()-3)/2, preWrapperOrder, wrapperEmpty);
+    
+
+    ComparisonPair compare_pairs[] = {
+        { compareByBookTitle, searchc },
+        { compareByBookAuthor, searchc },
+        { compareByBookTag, searchc}
+    };
+
+    int num_found;
+    Book* found_books = DB_select(BookT, compare_pairs, sizeof(compare_pairs), &num_found);
+
+    qsort(found_books, num_found, sizeof(Book), sortComparatorForSearch);
+
+    if (found_books != NULL) {
+        browseInitiate(printBookItem, printBookItemSelected, found_books, sizeof(Book), num_found, bookView, 35, 7, wrapperEmpty, wrapperEmpty);
+    } else {
+        printf("%s\n", getTranslation("no_results", activeUser.language));
+    }
+
+}
 
 

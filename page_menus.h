@@ -13,5 +13,6 @@ void delete(Book* k);
 void myRentals();
 void currentRentals();
 void allTimeRentals();
+void search();
 
 #endif /* PAGE_MENUS_H_INCLUDED */

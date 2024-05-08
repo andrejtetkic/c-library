@@ -55,3 +55,13 @@ void tempMainScreenButtonSellectEnterFunc(void* item){
 int wrapperEmpty(){
     return 0;
 }
+
+int preWrapperOrderBy(){
+    printf("%sOrder By%s\n\n", fillTimesN(' ', (windowWidth() - strlen("Order By"))/2), fillTimesN(' ', (windowWidth() - strlen("Order By"))/2));
+    return 2;
+}
+
+int preWrapperOrder(){
+    printf("%sOrder%s\n\n", fillTimesN(' ', (windowWidth() - strlen("Order"))/2), fillTimesN(' ', (windowWidth() - strlen("Order"))/2));
+    return 2;
+}

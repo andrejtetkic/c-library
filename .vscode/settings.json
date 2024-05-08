@@ -10,6 +10,7 @@
         "db_select_compare.h": "c",
         "string.h": "c",
         "menu_utils.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "book_funcs.h": "c"
     }
 }

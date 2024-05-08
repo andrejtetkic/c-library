@@ -8,5 +8,7 @@ void printRentedItem(void* item, int k, int column_width);
 void printRentedItemSelected(void* item, int k, int column_width);
 void getFullReview(void* item);
 int wrapperEmpty();
+int preWrapperOrderBy();
+int preWrapperOrder();
 
 #endif /* PAGE_MENUS_H_INCLUDED */

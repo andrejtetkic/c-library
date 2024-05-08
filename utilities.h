@@ -32,6 +32,9 @@
 #define ANSI_B_COLOR_GRAY    "\x1b[100m"
 #define ANSI_B_COLOR_RESET   "\x1b[0m"
 
+int order_by_selection;
+int order_selection;
+
 int getKeyPressed();
 void clearScreen();
 void pressEnter();
@@ -44,6 +47,7 @@ void rentBook(Book* book);
 int returnBook(char* rentalID);
 void editUser();
 void insertUserInfo(User* u, int language);
-
+char* toLowercaseCopy(const char *str);
+int sortComparatorForSearch(const void* p1, const void* p2);
 
 #endif /* UTILITIES_H_INCLUDED */
