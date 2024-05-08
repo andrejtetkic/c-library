@@ -26,5 +26,6 @@ int myRentalsArt();
 void rentalEnterFunc(void* item);
 void rentalAllEnterFunc(void* item);
 int returnRentalsMessage();
+void search();
 
 #endif /* MENU_UTILS_H_INCLUDED */

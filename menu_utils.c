@@ -524,7 +524,7 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "SEARCH") == 0)
             {
-                printf("searching....");
+                search();
                 //this will call for search fuc when it is completed
             }
             else if(strcmp(op, "MY RENTAL") == 0)
@@ -655,5 +655,21 @@ int returnRentalsMessage()
         printf(ANSI_COLOR_YELLOW"%s"ANSI_COLOR_RESET, getTranslation("rnt_msg", activeUser.language));
     }
 }
+int preWrap(){
+    printf("search");
+    return 1;
+}
+void search(){
+    clearScreen();
+    char searchc[200] = {0};
+    printf("\t\t\t| " ANSI_COLOR_GRAY "Search%s" ANSI_COLOR_RESET "|%s", fillTimesN(' ', 34 - 6), fillTimesN('\b', 34));
+    fillInForm(searchc);
+    int width = 20;
+    char *buttons[] = {"title", "author", "rating", "number of pages", "year"};
+    int selection = inlineOneButtonSelect(width, buttons, 5, (windowWidth()-2*width)/3, 3, 1, (windowHeight()-3)/2, preWrap, wrapperEmpty);
+    pressEnter();
+}
 
-
+void fetchBooksInfo(){
+    FILE* fp = Open_File(BookT, "rb");
+}
