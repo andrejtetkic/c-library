@@ -127,8 +127,10 @@ int initializeTranslationTable() {
     insert("hwmncp", "How many copies do you want to add", "Koliko primeraka zelite da dodate");
     insert("cnt_dl", "Cannot delete this book because it is currently rented by someone",
     "Ne mozete obrisati ovu knjigu jer je neko ternutno iznajmljuje");
-
-    
+    insert("acc", "Ascending", "Rastuci");
+    insert("dec", "Descending", "Opadajuci");
+    insert("ordby", "Order By", "Poredjaj Po");
+    insert("ord", "Order", "Redosled");
 
 
 

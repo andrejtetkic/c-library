@@ -1,5 +1,5 @@
 #include <string.h>
-
+#include <stdlib.h>
 #include "db_system.h"
 #include "utilities.h"
 

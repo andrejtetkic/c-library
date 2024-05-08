@@ -57,11 +57,13 @@ int wrapperEmpty(){
 }
 
 int preWrapperOrderBy(){
-    printf("%sOrder By%s\n\n", fillTimesN(' ', (windowWidth() - strlen("Order By"))/2), fillTimesN(' ', (windowWidth() - strlen("Order By"))/2));
+    char* text = getTranslation("ordby", activeUser.language);
+    printf("%s%s%s\n\n", fillTimesN(' ', (windowWidth() - strlen(text))/2), text, fillTimesN(' ', (windowWidth() - strlen(text))/2));
     return 2;
 }
 
 int preWrapperOrder(){
-    printf("%sOrder%s\n\n", fillTimesN(' ', (windowWidth() - strlen("Order"))/2), fillTimesN(' ', (windowWidth() - strlen("Order"))/2));
+    char* text = getTranslation("ord", activeUser.language);
+    printf("%s%s%s\n\n", fillTimesN(' ', (windowWidth() - strlen(text))/2), text, fillTimesN(' ', (windowWidth() - strlen(text))/2));
     return 2;
 }

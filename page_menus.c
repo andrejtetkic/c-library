@@ -250,7 +250,7 @@ void delete(Book* k)
     do{
         clearScreen();
         SignUpArt();
-        
+        fflush(stdin);
         int firstName_len = 34;
         printf("\t\t\t| " ANSI_COLOR_GRAY "First name%s" ANSI_COLOR_RESET "|%s", 
         fillTimesN(' ', firstName_len - 11), fillTimesN('\b', firstName_len) );
@@ -262,6 +262,7 @@ void delete(Book* k)
         // Enter last name
         clearScreen();
         SignUpArt();
+        fflush(stdin);
         
         int lastName_len = 34;
         printf("\t\t\t| %s%s|\n", firstName,
@@ -276,6 +277,7 @@ void delete(Book* k)
         clearScreen();
         SignUpArt();
         
+        fflush(stdin);
         int email_len = 34;
         printf("\t\t\t| %s%s|\n", firstName,
             fillTimesN(' ', firstName_len - strlen(firstName) - 1));
@@ -302,6 +304,7 @@ void delete(Book* k)
         clearScreen();
         SignUpArt();
         
+        fflush(stdin);
         int username_len = 34;
         printf("\t\t\t| %s%s|\n", firstName,
             fillTimesN(' ', firstName_len - strlen(firstName) - 1));
@@ -321,6 +324,7 @@ void delete(Book* k)
         clearScreen();
         SignUpArt();
 
+        fflush(stdin);
         printf("\t\t\t| %s%s|\n", firstName,
             fillTimesN(' ', firstName_len - strlen(firstName) - 1));
         printf("\t\t\t| %s%s|\n", lastName,
@@ -343,6 +347,7 @@ void delete(Book* k)
         do{
             clearScreen();
             SignUpArt();
+            fflush(stdin);
             memset(password2, 0, strlen(password2));
             printf("\t\t\t| %s%s|\n", firstName,
             fillTimesN(' ', firstName_len - strlen(firstName) - 1));
@@ -386,6 +391,9 @@ void delete(Book* k)
 
     signedUser.language = language;
     signedUser.Privilege = 1;
+    signedUser.deleted = 0;
+    strcpy(signedUser.userID, randomID(9));
+
     DB_insert(UserT, &signedUser);
     landingPage();
     
@@ -412,6 +420,7 @@ void logIn(){
 
     clearScreen();
     logInArt();
+    fflush(stdin);
 
     printf("\t\t\t| %s%s|\n", username,
         fillTimesN(' ', username_len - strlen(username) - 1));
@@ -658,17 +667,17 @@ void search(){
     fflush(stdin);
 
     char searchc[200] = {0};
-    printf("\t\t\t\t\t    | " ANSI_COLOR_GRAY "Search%s" ANSI_COLOR_RESET "|%s", fillTimesN(' ', 34 - 6), fillTimesN('\b', 35));
+    printf("\t\t\t\t\t    | " ANSI_COLOR_GRAY "%s%s" ANSI_COLOR_RESET "|%s", getTranslation("search", activeUser.language), fillTimesN(' ', 34 - strlen(getTranslation("search", activeUser.language))), fillTimesN('\b', 35));
     fillInForm(searchc);
 
     clearScreen();
 
     int width = 20;
-    char *buttons[] = {"title", "author", "rating", "number of pages", "year"};
+    char *buttons[] = {getTranslation("title", activeUser.language), getTranslation("author", activeUser.language), getTranslation("rating", activeUser.language), getTranslation("pages", activeUser.language), getTranslation("pub_yr", activeUser.language)};
     order_by_selection = inlineOneButtonSelect(width, buttons, 5, (windowWidth()-5*width - 5*3)/2, 3, 1, (windowHeight()-3)/2, preWrapperOrderBy, wrapperEmpty);
     
     int order_width = 50;
-    char *order_buttons[] = {"ascending ", "descending"};
+    char *order_buttons[] = {getTranslation("acc", activeUser.language), getTranslation("dec", activeUser.language)};
     order_selection = inlineOneButtonSelect(order_width, order_buttons, 2, (windowWidth()-2*order_width - 2*3)/2, 3, 1, (windowHeight()-3)/2, preWrapperOrder, wrapperEmpty);
     
 
@@ -687,6 +696,7 @@ void search(){
         browseInitiate(printBookItem, printBookItemSelected, found_books, sizeof(Book), num_found, bookView, 35, 7, wrapperEmpty, wrapperEmpty);
     } else {
         printf("%s\n", getTranslation("no_results", activeUser.language));
+        pressEnter();
     }
 
 }

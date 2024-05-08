@@ -584,13 +584,11 @@ void mainMenuEnterFunc(void* item){
             }
             else if(strcmp(op, "SEARCH") == 0)
             {
-                printf("searching...");
-                // will call for search func when it is completed               
+                search();
             }
             else if(strcmp(op, "LOG") == 0)
             {
                rentalsLog();
-                // will call for log func when it is completed
             }
             else if (strcmp(op, "EDIT PROFILE") == 0)
             {
@@ -628,7 +626,6 @@ void mainMenuEnterFunc(void* item){
             else if(strcmp(op, "SEARCH") == 0)
             {
                 search();
-                //this will call for search fuc when it is completed
             }
             else if(strcmp(op, "MY RENTAL") == 0)
             {               
