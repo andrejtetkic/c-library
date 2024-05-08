@@ -513,8 +513,8 @@ void bookView(void* item){
     int width = 24;
     int selection;
 
-    char *buttonsUser[] = {getTranslation("back_br", activeUser.language), getTranslation("rntT", activeUser.language), getTranslation("rev", activeUser.language), getTranslation("lev_rev", activeUser.language)};
-    char *buttonsAdmin[] = {getTranslation("back_br", activeUser.language), getTranslation("edit", activeUser.language), getTranslation("delete", activeUser.language)};
+    char *buttonsUser[] = {getTranslation("back_br", activeUser.language), getTranslation("rnt", activeUser.language), getTranslation("rev", activeUser.language), getTranslation("lev_rev", activeUser.language)};
+    char *buttonsAdmin[] = {getTranslation("back_br", activeUser.language), getTranslation("edit___", activeUser.language), getTranslation("delete", activeUser.language)};
 
 
     if(activeUser.Privilege == 1){
